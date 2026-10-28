@@ -1,82 +1,151 @@
 <div align="center">
 
-<img src="docs/assets/banner.jpg" alt="Word Atlas: 7,298 IELTS words, each with its own illustration" width="100%">
+<a href="https://kai987.github.io/IELTS-word-atlas/"><img src="docs/assets/cover-v2.jpg" alt="词光 · Word Atlas — an illustrated world of words" width="100%"></a>
 
-# Word Atlas 词光
+# Word Atlas · 词光
 
-**One word, one picture. Light up your IELTS vocabulary.**<br>
-7,298 core words · 14,596 original example sentences · 7,298 illustrations · UK & US audio · FSRS spaced repetition
+**See the word. Hear it. Make it yours.**
 
-[**Open the app →**](https://kai987.github.io/IELTS-word-atlas/) &nbsp;·&nbsp; [▶ Launch film](docs/assets/launch.mp4) &nbsp;·&nbsp; [Download the dataset](data/) &nbsp;·&nbsp; [日本語](README.md) &nbsp;·&nbsp; [简体中文](README.zh-CN.md) &nbsp;·&nbsp; English
+7,298 IELTS words · Original illustrations · UK & US audio · Spaced repetition
 
-<a href="docs/assets/launch.mp4"><img src="docs/assets/launch-preview.webp" alt="Word Atlas launch film highlights" width="100%"></a>
+[**Try this fork ↗**](https://kai987.github.io/IELTS-word-atlas/)　 /　 [Original 48-second film](docs/assets/launch.mp4)　 /　 [Get the dataset](data/)　 /　 [日本語](README.md)　 /　 [简体中文](README.zh-CN.md)　 /　 English
 
-<sub>▶ Click to watch the full 48-second launch film (with sound)</sub>
+[![Code: MIT](https://img.shields.io/badge/Code-MIT-17283B?style=flat-square)](LICENSE)
+[![Dataset: CC BY 4.0](https://img.shields.io/badge/Dataset-CC_BY_4.0-AD5038?style=flat-square)](CONTENT_LICENSE.md)
+[![Follow on X](https://img.shields.io/badge/X-@yangleiocx3-17283B?style=flat-square&logo=x&logoColor=white)](https://x.com/yangleiocx3)
+
+<br>
+
+<a href="https://0xlei.tech/words/"><img src="https://0xlei.tech/words/beta/banner.png" alt="Word Atlas iOS beta — scan with WeChat to join the beta group" width="100%"></a>
+
+**Upstream project announcement: the Word Atlas iOS app is in development.** This invitation belongs to the original project, separately from this Japanese-localized fork. Scan the code with WeChat to join the beta group. If the code has expired, open the [website](https://0xlei.tech/words/) and tap 「内测」 in the top bar to add the author on WeChat.
 
 </div>
 
 ---
 
-Word Atlas gives every word a picture, two sentences and a review rhythm that brings it back right before you forget. Every word you learn lights a star in your own word galaxy: 7,298 stars, one per word, rendered with custom WebGL2 shaders. It is free, needs no account, shows no ads and keeps your progress on your own device. This fork supports Japanese and Simplified Chinese throughout the interface and all 7,298 vocabulary entries. Without a saved choice, Chinese browser locales use Chinese; all other locales use Japanese. A manual language choice is remembered on the device.
+Word Atlas is an illustrated IELTS vocabulary app. This fork supports Japanese and Simplified Chinese in the interface and all 7,298 entries. Without a saved choice, Chinese browser locales use Chinese; all other locales use Japanese. A manual language choice is remembered on the device. Connect words with scenes and pronunciation, practise active recall, and return to them with FSRS spaced repetition. No account required. Learning progress stays on your device.
 
-The original definitions, sentences, illustrations and English recordings were created for the upstream [Word Atlas project](https://github.com/designfuchen/word-atlas), funded by its author, and released for free. This fork adds full Japanese localization, independent semantic review records and a Japanese welcome recording generated with AivisSpeech (morioki).
+> **Version scope:** This is a Japanese-localized fork of [designfuchen/word-atlas](https://github.com/designfuchen/word-atlas). Its [GitHub Pages site](https://kai987.github.io/IELTS-word-atlas/) is built from this repository. The original upstream website evolves separately and may have different features. The code and dataset here remain available under their respective MIT and CC BY 4.0 licenses.
 
-| | |
-|---:|---|
-| **7,298** | IELTS core entries, CEFR A1–C2, 19 topics |
-| **7,298** | original illustrations |
-| **14,596** | original example sentences with Chinese and Japanese translations |
-| **22,905** | audio clips: UK and US pronunciation, narrated examples |
-| **0** | accounts, ads or trackers |
+[Preview](#preview) · [Learning loop](#learning-loop) · [Quick start](#quick-start) · [Open dataset](#open-dataset) · [Contributing](#contributing)
 
-<p align="center"><a href="docs/assets/demo.mp4"><b>▶ Watch the 30-second app demo</b></a></p>
+## Preview
 
-<img src="docs/assets/galaxy.jpg" alt="The word galaxy" width="100%">
+### A vocabulary atlas you can listen to and practise with
 
-<img src="docs/assets/today-desktop.jpg" alt="Today" width="100%">
+<img src="docs/assets/atlas-desktop.jpg" alt="Open-source edition: desktop vocabulary atlas" width="100%">
 
-## What every entry has
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/today-mobile.jpg" alt="Daily study plan on mobile" width="100%"></td>
+<td width="50%"><img src="docs/assets/word-mobile.jpg" alt="Illustrated word card with pronunciation and examples" width="100%"></td>
+</tr>
+<tr><td align="center">A plan for today</td><td align="center">A scene for every word</td></tr>
+</table>
 
-- **An illustration** in one consistent vintage field-guide style, showing the scene of the first example.
-- **UK and US pronunciation**, plus a narrated everyday example (AI voices by ElevenLabs).
-- **Two original examples**: a short everyday sentence and an IELTS-register sentence on a common exam topic, both with Chinese and Japanese translations.
-- **Up to three senses** with Chinese or Japanese meanings and short learner-friendly English definitions.
-- **Collocations, word family, synonyms and antonyms**, and one usage tip.
-- **CEFR level (A1–C2)** and one of **19 IELTS topics**.
+<sub>Actual screenshots of the repository edition. The header is a conceptual brand illustration.</sub>
 
-## How it helps you remember
+### Watch your vocabulary take shape
 
-- **Active recall** with four question types: meaning, picture cloze, listening and spelling.
-- **FSRS 6** spaced repetition (the open algorithm used by modern Anki) with an adjustable retention target.
-- **Honest scoring**: only the first attempt counts; wrong words return in a different format within the session without inflating accuracy.
-- **Typing studio** for words, sentences and dictation, measured separately from memory.
-- **Share cards** for any word or for the day's session.
+<img src="docs/assets/galaxy.jpg" alt="Vocabulary galaxy showing learning progress across topics" width="100%">
 
-## The dataset (CC BY 4.0)
+Explore 19 topic groups, rotate and zoom the galaxy, and select a star to open its word card. Brightness reflects learning status. Built with WebGL2, with a fallback for unsupported devices.
 
-- Original English/Chinese corpus: [`data/word-atlas.json`](data/word-atlas.json) and [`data/word-atlas.csv`](data/word-atlas.csv)
-- Japanese source overlay: [`data/ja/entries/`](data/ja/entries/); deployable overlay and search labels: [`public/atlas/ja/`](public/atlas/ja/)
-- `public/atlas/img/` (512 px WebP) and `public/atlas/thumb/` (256 px)
-- `public/atlas/audio/{uk,us,ex}/` MP3
+<details>
+<summary><b>Watch the 48-second introduction</b></summary>
 
-Field reference: [docs/dataset.md](docs/dataset.md). Use it for Anki decks, apps, browser extensions, evaluation sets or research. Please credit "Word Atlas contributors".
+<a href="docs/assets/launch.mp4"><img src="docs/assets/launch-preview.webp" alt="Watch the Word Atlas introduction" width="100%"></a>
 
-## Run it
+[Play the full film with sound](docs/assets/launch.mp4)
+
+</details>
+
+## Learning loop
+
+| Step | What you do |
+| :--- | :--- |
+| **See** | Explore an illustration, bilingual definitions, two original examples, collocations and usage notes. |
+| **Hear** | Switch between UK and US pronunciation and listen to example sentences. A subset includes audio for the second example. |
+| **Recall** | Practise meaning-to-word, illustrated cloze, listening recognition and spelling. |
+| **Review** | Let FSRS schedule reviews based on your history. Only the first answer counts toward accuracy. |
+| **Keep** | Track progress in the galaxy, practise typing separately, and export or restore your local progress. |
+
+**Local first.** Visited entries and media can be cached for offline use. Export a progress backup before moving to another device.
+
+Listen to a sample: **abandon** — [UK](public/atlas/audio/uk/abandon.mp3) · [US](public/atlas/audio/us/abandon.mp3) · [Example](public/atlas/audio/ex/abandon.mp3).
+
+## Quick start
+
+Requires **Node.js 20+** and npm. This repository includes the full image and audio collection, so the initial download can take time.
 
 ```bash
+git clone --depth 1 https://github.com/kai987/IELTS-word-atlas.git
+cd IELTS-word-atlas
 npm ci
-npm run dev        # http://localhost:5188
-npm test
-npm run check:atlas
-npm run build      # static site in dist/; ATLAS_BASE=/sub/path/ for sub-path hosting
+npm run dev
 ```
 
-## How the content was made
+Open **http://localhost:5188**.
 
-The upstream headword list is a common IELTS reading core list (7,298 unique entries). Its original entry content was newly written for that project: definitions, examples, collocations and tips by a large language model under one lexicographic spec; illustrations by an image model in one art direction; audio by ElevenLabs. The pipeline lives in [`scripts/atlas/`](scripts/atlas) and is described in [docs/pipeline.md](docs/pipeline.md).
+```bash
+npm test             # Unit tests
+npm run check:atlas  # Dataset and media validation
+npm run check:japanese # Japanese overlay validation
+npm run build        # Production build in dist/
+```
 
-The Japanese overlay translates bilingual meanings, examples and collocations primarily from English; Chinese-only tips and notes are translated from Chinese. It retains English learning material, IDs, entry order and source hashes. Confirmed corrections from independent semantic review have been applied; see [Japanese localization](docs/japanese.md). Automated checks and local-model review do **not** certify the corpus as professionally proofread or error-free. If you find a mistake, please open an issue or send a pull request against `data/`. This is not an official IELTS list and makes no score guarantees.
+For a subpath deployment: `ATLAS_BASE=/IELTS-word-atlas/ npm run build`. See the [deployment guide](docs/deployment.md).
+
+**Stack:** React 19 · TypeScript · Vite · ts-fsrs · WebGL2
+
+## Open dataset
+
+Use the app as it is, or build your own learning tools, Anki decks and research projects.
+
+| Resource | Repository edition | Download / documentation |
+| :--- | :--- | :--- |
+| Entries | **7,298**, CEFR A1–C2, 19 topics | [JSON](data/word-atlas.json) · [CSV](data/word-atlas.csv) |
+| Examples | **14,596**, everyday and IELTS contexts, with Chinese and Japanese translations | [Schema](docs/dataset.md) |
+| Illustrations | **7,298**, 512 px WebP plus thumbnails | [Images](public/atlas/img/) |
+| Recordings | **22,905**, UK/US words and example sentences | [Audio](public/atlas/audio/) |
+
+```python
+import json
+from pathlib import Path
+
+words = json.loads(Path("data/word-atlas.json").read_text(encoding="utf-8"))
+b2_environment = [w for w in words if w["cefr"] == "B2" and w["topic"] == "environment"]
+```
+
+Japanese source translations are in [`data/ja/entries/`](data/ja/entries/); the deployable overlay and search labels are in [`public/atlas/ja/`](public/atlas/ja/). The full JSON and CSV exports above contain the original English/Chinese corpus.
+
+### Provenance and limitations
+
+The original text and illustrations were generated for the upstream project using AI; English speech was synthesized with ElevenLabs. Automated structure and consistency checks have been performed, but **the entire collection has not been manually reviewed**. Definitions, examples, illustrations or pronunciation may contain errors. This is not an official IELTS list and does not promise score improvements.
+
+The Japanese overlay translates bilingual meanings, examples and collocations primarily from English; Chinese-only tips and notes are translated from Chinese. It retains English learning material, IDs, entry order and source hashes. Confirmed corrections from independent semantic review have been applied; see [Japanese localization](docs/japanese.md). This review does not certify the corpus as professionally proofread or error-free. The Japanese welcome recording uses AivisSpeech (morioki).
+
+[Generation pipeline](docs/pipeline.md) · [Learning model](docs/learning-model.md) · [Scripts](scripts/atlas/)
+
+## Contributing
+
+Please include the **word ID, reproduction steps and expected result** when reporting a problem. For vocabulary corrections, reliable dictionary references are welcome.
+
+- [Report an issue in this fork](https://github.com/kai987/IELTS-word-atlas/issues/new/choose)
+- [Contribution guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
 
 ## License
 
-Code: [MIT](LICENSE). Word content, illustrations and recordings: [CC BY 4.0](CONTENT_LICENSE.md), attribution "Word Atlas contributors".
+| Scope | License |
+| :--- | :--- |
+| Application code | [MIT](LICENSE) |
+| Vocabulary text, illustrations and word recordings | [CC BY 4.0](CONTENT_LICENSE.md); credit “Word Atlas contributors（词光）” |
+| Dependencies and fonts | Their respective licenses |
+
+---
+
+Original project by [@designfuchen](https://github.com/designfuchen); Japanese localization in [this fork](https://github.com/kai987/IELTS-word-atlas). Follow the upstream project on [X · @yangleiocx3](https://x.com/yangleiocx3).
+
+If Word Atlas helps you, consider starring the repository or sharing it with another learner.

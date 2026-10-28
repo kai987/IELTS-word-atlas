@@ -29,6 +29,8 @@ IELTSの主要単語7,298語。それぞれにイラスト、2つの例文、英
 
 このリポジトリは、[designfuchen/word-atlas](https://github.com/designfuchen/word-atlas) をもとにした日本語対応版です。元の単語解説・英語例文・イラスト・英語音声は、上流プロジェクトの作者が費用を負担して制作し、公開したものです。本フォークでは、画面と全7,298語の日本語化、訳文の意味の検証、日英中の文書整備、日本語の起動画面音声などを追加しています。
 
+> **バージョンについて**：このフォークの[公開サイト](https://kai987.github.io/IELTS-word-atlas/)は、このリポジトリのコードから公開しています。上流の[公式サイト](https://0xlei.tech/words/)は独自に更新されるため、機能が異なる場合があります。上流のiOS開発・ベータ版の案内は[上流のREADME](https://github.com/designfuchen/word-atlas#readme)を参照してください。
+
 画面と単語の説明は、日本語と簡体字中国語に切り替えられます。言語ボタンの表示は「日」「中」。初回はブラウザーの優先言語に従い、中国語なら中国語、それ以外なら日本語で開きます。一度選んだ言語は端末に保存されます。英単語・英文例文・英語音声は、どちらの表示言語でも学習教材としてそのまま使います。
 
 ## 収録内容
@@ -215,15 +217,15 @@ npm run build        # 本番用ビルド。出力先は dist/
 
 ## コントリビュート
 
-- **誤りの修正**：単語IDと問題のある箇所をIssueに記載するか、PRを作成してください。
+- **誤りの修正**：[Issueテンプレート](https://github.com/kai987/IELTS-word-atlas/issues/new/choose)から、単語ID・問題のある箇所・再現手順・期待する結果を記載してください。意味や用法の修正には、辞書などの確認できる出典も添えてください。
 - **機能の提案**：まずIssueで相談してください。「登録不要・ローカル優先・静かで見やすい」という方向を大切にしています。
 - **コード**：TypeScriptの厳格モードを使用。`npm test`、`npm run test:ja-review`、`npm run check:atlas`、`npm run check:japanese` が通ることを確認してください。
 
-詳しくは [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
+詳しくは [CONTRIBUTING.md](CONTRIBUTING.md)、安全性に関する連絡は [SECURITY.md](SECURITY.md) を参照してください。
 
 ## ライセンスとクレジット
 
-- 元プロジェクト：[designfuchen/word-atlas](https://github.com/designfuchen/word-atlas)。本リポジトリは、その日本語対応版です。
+- 元プロジェクト：[designfuchen/word-atlas](https://github.com/designfuchen/word-atlas)。本リポジトリは、その日本語対応版です。上流作者の制作情報：[X · @yangleiocx3](https://x.com/yangleiocx3)。
 - コード：[MIT](LICENSE)
 - 単語データ・イラスト・英語音声：[CC BY 4.0](CONTENT_LICENSE.md)。クレジットは `Word Atlas contributors — CC BY 4.0` とし、ライセンスへのリンクと変更の有無を明記してください。
 - 英語の合成音声：ElevenLabs（イギリス英語：Alice、アメリカ英語：Sarah）。日本語の起動画面音声：AivisSpeech（morioki）。完成音声の利用は、音声モデルや声の権利の譲渡、提供元による推奨を意味しません。
