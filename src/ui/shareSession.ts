@@ -24,7 +24,15 @@ export async function shareSession(atlas: Atlas, s: ActiveSession) {
     c.width = W;
     c.height = H;
     const ctx = c.getContext("2d")!;
-    await document.fonts.load(`600 96px ${SERIF}`).catch(() => null);
+    const cardText = [
+      "0123456789 Word Atlas %", ...s.steps.map((step) => atlas.byId.get(step.id)?.word ?? ""),
+      t("词光 一词一画，点亮雅思 月日 今天点亮了颗星 学了个词 首次正确 新词 复习 需要再见面",
+        "詞光 単語と絵で、IELTSを照らす 月日 今日は個の星を灯しました 語を学習 初回正答率 新しい単語 復習 もう一度"),
+    ].join(" ");
+    await Promise.all([
+      document.fonts.load(`600 96px ${SERIF}`, cardText),
+      document.fonts.load(`400 30px ${SANS}`, cardText),
+    ]).catch(() => null);
     ctx.fillStyle = "#F3ECDF";
     ctx.fillRect(0, 0, W, H);
     const ids = [...new Set(s.steps.map((x) => x.id))].slice(0, 9);

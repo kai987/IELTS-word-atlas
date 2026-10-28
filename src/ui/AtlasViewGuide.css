@@ -1,0 +1,101 @@
+.atlas-view-guide {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.atlas-view-guide-target {
+  position: relative;
+  display: inline-flex;
+  border-radius: 999px;
+}
+
+.atlas-view-guide.is-open .atlas-view-guide-target::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid color-mix(in srgb, var(--ink-2) 70%, transparent);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink-2) 12%, transparent), 0 0 12px var(--glow);
+  pointer-events: none;
+}
+
+.atlas-view-guide-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  z-index: 5;
+  max-width: calc(100vw - 32px);
+  padding: 16px 16px 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  animation: atlas-guide-enter 180ms var(--ease) both;
+}
+
+.atlas-view-guide-popover::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: var(--guide-arrow);
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  background: var(--card);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.atlas-view-guide-popover.is-above {
+  top: auto;
+  bottom: calc(100% + 12px);
+}
+
+.atlas-view-guide-popover.is-above::before {
+  top: auto;
+  bottom: -5px;
+  transform: translateX(-50%) rotate(225deg);
+}
+
+.atlas-view-guide-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.atlas-view-guide-description {
+  margin-top: 4px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.6;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.atlas-view-guide-dismiss {
+  display: block;
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0 -12px 0 auto;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.atlas-view-guide-dismiss:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+@keyframes atlas-guide-enter {
+  from { opacity: 0; translate: 0 4px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-view-guide-popover { animation: none; }
+}

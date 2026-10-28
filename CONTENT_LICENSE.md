@@ -2,9 +2,9 @@
 
 ## 代码 / Code
 
-源代码与界面设计采用 [MIT License](LICENSE)。依赖包保留各自授权；Fraunces 字体为 SIL Open Font License 1.1。
+源代码与界面设计采用 [MIT License](LICENSE)。依赖包保留各自授权；Fraunces、Atkinson Hyperlegible Next 和 Noto Sans SC 字体为 SIL Open Font License 1.1。
 
-Source code and UI design are under the [MIT License](LICENSE). Dependencies keep their own licenses; the Fraunces typeface is under the SIL Open Font License 1.1.
+Source code and UI design are under the [MIT License](LICENSE). Dependencies keep their own licenses; Fraunces, Source Serif 4, Atkinson Hyperlegible Next and Noto Sans SC are under the SIL Open Font License 1.1. The bundled font notices are in [`public/fonts/`](public/fonts/).
 
 ## 词库内容、插画与录音 / Dataset, illustrations and recordings
 

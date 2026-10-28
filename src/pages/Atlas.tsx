@@ -11,6 +11,7 @@ import { useStore } from "../store/store";
 import { Illustration } from "../ui/Illustration";
 import { searchAtlas } from "../ui/Palette";
 import { Speak } from "../ui/Speak";
+import { AtlasViewGuide } from "../ui/AtlasViewGuide";
 
 type Status = "all" | "new" | "learning" | "mastered" | "saved";
 
@@ -37,9 +38,18 @@ export function AtlasPage({
     ["mastered", t("已掌握", "習得済み")],
     ["saved", t("收藏", "お気に入り")],
   ];
+  const levelNames: Record<string, string> = {
+    A1: t("入门", "入門"),
+    A2: t("基础", "基礎"),
+    B1: t("进阶", "中級"),
+    B2: t("中高级", "中上級"),
+    C1: t("高级", "上級"),
+    C2: t("熟练", "熟達"),
+  };
   const atlas = useAtlas();
   const cards = useStore((s) => s.progress.cards);
   const bookmarks = useStore((s) => s.progress.bookmarks);
+  const onboarded = useStore((s) => s.settings.onboarded);
   const [q, setQ] = useState(route.q ?? "");
   const [status, setStatus] = useState<Status>("all");
   const [view, setViewState] = useState<View>(() =>
@@ -101,9 +111,9 @@ export function AtlasPage({
         <div>
           <p className="eyebrow">{t(`图鉴 · ${atlas.count.toLocaleString()} 词`, `単語図鑑 · ${atlas.count.toLocaleString()}語`)}</p>
           <h1 className="display">
-            {t("每个词，", "どの単語にも、")}
+            <span className="atlas-title-phrase">{t("看图学词，", "絵で単語を学び、")}</span>
             <br className="br-sm" />
-            {t("都有一幅画。", "一枚の絵がある。")}
+            <span className="atlas-title-phrase">{t("在语境中理解。", "文脈の中で理解する。")}</span>
           </h1>
           <p className="lede">
             {t(`${atlas.examples.toLocaleString()} 条原创例句 · 英美发音 · 按难度和 ${atlas.topics.length} 个雅思话题整理`, `${atlas.examples.toLocaleString()}のオリジナル例文 · 英米の発音 · レベル別・IELTSの${atlas.topics.length}トピック別に収録`)}
@@ -137,18 +147,20 @@ export function AtlasPage({
               <button
                 className={`chip-btn ${!level ? "is-on" : ""}`}
                 onClick={() => setFilter({ level: undefined })}
+                aria-pressed={!level}
               >
-                {t("所有难度", "すべてのレベル")}
+                {t("全部难度", "すべてのレベル")}
               </button>
               {atlas.cefr.map((l) => (
                 <button
                   key={l}
                   className={`chip-btn lv lv-${l} ${level === l ? "is-on" : ""}`}
+                  aria-pressed={level === l}
                   onClick={() =>
                     setFilter({ level: level === l ? undefined : l })
                   }
                 >
-                  {l}
+                  {levelNames[l] ? `${levelNames[l]} ${l}` : l}
                 </button>
               ))}
             </div>
@@ -193,36 +205,38 @@ export function AtlasPage({
               ? t("搜索一个词，星图会带你飞过去", "単語を検索すると、星図がその場所へ案内します")
               : t(`${list.length.toLocaleString()} 个结果`, `${list.length.toLocaleString()}件の検索結果`)}
           </span>
-          <div
-            className="segmented segmented-icons"
-            role="group"
-            aria-label={t("视图", "表示形式")}
-          >
-            <button
-              className={view === "grid" ? "is-on" : ""}
-              onClick={() => setView("grid")}
-              aria-label={t("图片视图", "画像表示")}
-              aria-pressed={view === "grid"}
+          <AtlasViewGuide enabled={onboarded}>
+            <div
+              className="segmented segmented-icons"
+              role="group"
+              aria-label={t("视图", "表示形式")}
             >
-              <Grid3x3 size={17} />
-            </button>
-            <button
-              className={view === "list" ? "is-on" : ""}
-              onClick={() => setView("list")}
-              aria-label={t("列表视图", "リスト表示")}
-              aria-pressed={view === "list"}
-            >
-              <List size={17} />
-            </button>
-            <button
-              className={view === "galaxy" ? "is-on" : ""}
-              onClick={() => setView("galaxy")}
-              aria-label={t("星图视图", "星図表示")}
-              aria-pressed={view === "galaxy"}
-            >
-              <Sparkles size={17} />
-            </button>
-          </div>
+              <button
+                className={view === "grid" ? "is-on" : ""}
+                onClick={() => setView("grid")}
+                aria-label={t("图片视图", "画像表示")}
+                aria-pressed={view === "grid"}
+              >
+                <Grid3x3 size={17} />
+              </button>
+              <button
+                className={view === "list" ? "is-on" : ""}
+                onClick={() => setView("list")}
+                aria-label={t("列表视图", "リスト表示")}
+                aria-pressed={view === "list"}
+              >
+                <List size={17} />
+              </button>
+              <button
+                className={view === "galaxy" ? "is-on" : ""}
+                onClick={() => setView("galaxy")}
+                aria-label={t("星图视图", "星図表示")}
+                aria-pressed={view === "galaxy"}
+              >
+                <Sparkles size={17} />
+              </button>
+            </div>
+          </AtlasViewGuide>
         </div>
       </div>
 

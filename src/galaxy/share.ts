@@ -12,7 +12,14 @@ export async function shareGalaxy(source: HTMLCanvasElement, lit: number, total:
     c.width = W;
     c.height = H;
     const g = c.getContext("2d")!;
-    await document.fonts.load(`600 72px ${SERIF}`).catch(() => null);
+    const cardText = t(
+      "我的词汇星图 已点亮颗星 共个雅思词 每学会一个，就点亮一颗 词光 一词一画，点亮雅思",
+      "わたしの単語星図 個の星を灯しました IELTS単語 全語 覚えた単語が星になる 詞光 単語と絵で、IELTSを照らす",
+    ) + " 0123456789 Word Atlas";
+    await Promise.all([
+      document.fonts.load(`600 72px ${SERIF}`, cardText),
+      document.fonts.load(`400 28px ${SANS}`, cardText),
+    ]).catch(() => null);
     g.fillStyle = "#090c18";
     g.fillRect(0, 0, W, H);
     // Cover-fit the galaxy into the upper part of the poster.

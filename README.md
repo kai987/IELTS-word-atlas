@@ -229,7 +229,7 @@ npm run build        # 本番用ビルド。出力先は dist/
 - コード：[MIT](LICENSE)
 - 単語データ・イラスト・英語音声：[CC BY 4.0](CONTENT_LICENSE.md)。クレジットは `Word Atlas contributors — CC BY 4.0` とし、ライセンスへのリンクと変更の有無を明記してください。
 - 英語の合成音声：ElevenLabs（イギリス英語：Alice、アメリカ英語：Sarah）。日本語の起動画面音声：AivisSpeech（morioki）。完成音声の利用は、音声モデルや声の権利の譲渡、提供元による推奨を意味しません。
-- Frauncesフォント：SIL Open Font License。記憶アルゴリズム [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs)：MIT。
+- フォント（Atkinson Hyperlegible Next・Noto Sans SC・Fraunces・Source Serif 4）：SIL Open Font License。[同梱のライセンス](public/fonts/)を参照してください。記憶アルゴリズム [ts-fsrs](https://github.com/open-spaced-repetition/ts-fsrs)：MIT。
 
 ## Starの推移
 

@@ -45,7 +45,16 @@ export async function renderWordCard(atlas: Atlas, e: Entry) {
   c.width = W;
   c.height = H;
   const ctx = c.getContext("2d")!;
-  await Promise.all([document.fonts.load(`600 120px ${SERIF}`), document.fonts.load(`italic 400 40px ${SERIF}`)]).catch(() => null);
+  const cardText = [
+    e.w, e.uk, e.us, ...e.senses.slice(0, 2).map((sense) => sense.zh),
+    e.ex[0]?.en ?? "", e.ex[0]?.zh ?? "",
+    t("词光 一词一画，点亮雅思 英 美", "詞光 単語と絵で、IELTSを照らす 英 米"),
+  ].join(" ");
+  await Promise.all([
+    document.fonts.load(`600 120px ${SERIF}`, cardText),
+    document.fonts.load(`italic 400 40px ${SERIF}`, cardText),
+    document.fonts.load(`400 30px ${SANS}`, cardText),
+  ]).catch(() => null);
 
   ctx.fillStyle = "#F3ECDF";
   ctx.fillRect(0, 0, W, H);

@@ -25,9 +25,20 @@ Without a saved selection, the initial language follows the browser's primary
 preferred language (`navigator.languages[0]`): Chinese locales use Chinese; Japanese and all other locales use
 Japanese. A valid manual selection takes precedence on later visits. The inline
 startup script and the application resolve the language consistently, including
-when browser storage is blocked. Japanese interface and canvas text use
-`"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif`; English display text
-retains Fraunces.
+when browser storage is blocked. Latin text and digits follow the hosted Word
+Atlas font scheme: Atkinson Hyperlegible Next for Latin text and the Noto Sans
+SC Latin subset as the digits-only `WA Digits` face (`U+0030-0039`). Chinese text
+uses Noto Sans SC. Japanese glyphs retain the existing
+`"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif` stack, including
+the Japanese logo and splash. The variable fonts are bundled through Fontsource
+and served locally with the application. Canvas share cards read the same CSS
+font variables; particle targets are sampled after their fonts have loaded.
+Font licenses are included in `public/fonts/`.
+The base `:root` and dark-theme variables match the original hosted stylesheet,
+including font, radius, motion and layout variables. The original
+`data-font="sans"` override keeps the active Latin typeface as Atkinson;
+Source Serif 4 is bundled for the base display-font declaration. Japanese font
+overrides remain separate from these shared variables.
 The splash samples the active language's title into particle targets (`詞光` in
 Japanese, `词光` in Chinese), with matching text in reduced-motion mode. The
 particle gathering, dispersal and opening-door transitions remain available.

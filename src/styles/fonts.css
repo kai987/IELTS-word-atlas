@@ -1,0 +1,9 @@
+/* The hosted Word Atlas uses the Noto Sans SC Latin face for digits only. */
+@font-face {
+  font-family: "WA Digits";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("@fontsource-variable/noto-sans-sc/files/noto-sans-sc-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0030-0039;
+}

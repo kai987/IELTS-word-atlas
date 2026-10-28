@@ -1,5 +1,6 @@
 /* Word Atlas — design system
-   Paper, ink and four field-guide pigments, matched to the illustration palette. */
+   Paper, ink and four field-guide pigments, matched to the illustration palette.
+   Root variables match the hosted base light and dark themes. */
 
 :root {
   /* Light: bright ivory paper lit from above; gold is the colour of "light". */
@@ -10,39 +11,53 @@
   --card-2: #faf5ec;
   --ink: #1a2035;
   --ink-2: #434b65;
-  --ink-3: #7a7d8a;
+  --ink-3: #565a66;
   --ink-4: #aba79f;
-  --line: rgba(26, 32, 53, 0.1);
-  --line-strong: rgba(26, 32, 53, 0.15);
+  --line: rgba(26, 32, 53, .1);
+  --line-strong: rgba(26, 32, 53, .15);
+  --fill: rgba(26, 32, 53, .055);
+  --fill-2: rgba(26, 32, 53, .09);
+  --thumb: #fffdf8;
+  --thumb-shadow: 0 0 0 .5px rgba(26, 32, 53, .07), 0 1px 2px rgba(26, 32, 53, .08), 0 4px 12px -4px rgba(26, 32, 53, .16);
   --terra: #c4573a;
-  --terra-ink: #a8432a;
+  --terra-ink: #963b24;
   --terra-soft: #f5ddd1;
   --ochre: #cb922c;
+  --ochre-ink: #795312;
   --ochre-soft: #f7e7c4;
   --sage: #6a8c63;
-  --sage-ink: #4b6b45;
+  --sage-ink: #405f3a;
   --sage-soft: #dfe9d8;
   --sky: #5f88a8;
   --sky-soft: #dde8f0;
   --plum: #9a6283;
-  --glow: rgba(255, 200, 110, 0.26);
-  --mark: rgba(211, 154, 47, 0.32);
-  --shadow-sm: 0 1px 2px rgba(30, 38, 64, 0.06), 0 2px 6px -2px rgba(30, 38, 64, 0.06);
-  --shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 1px 2px rgba(30, 38, 64, 0.05), 0 18px 40px -24px rgba(30, 38, 64, 0.28);
-  --shadow-lg: 0 30px 80px -30px rgba(20, 26, 46, 0.45), 0 8px 24px -12px rgba(20, 26, 46, 0.2);
-  --serif: "Fraunces Variable", "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", "Noto Sans SC", Roboto, sans-serif;
+  --glow: rgba(255, 200, 110, .26);
+  --mark: rgba(211, 154, 47, .32);
+  --shadow-sm: 0 1px 2px rgba(30, 38, 64, .06), 0 2px 6px -2px rgba(30, 38, 64, .06);
+  --shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 1px 2px rgba(30, 38, 64, .05), 0 18px 40px -24px rgba(30, 38, 64, .28);
+  --shadow-lg: 0 30px 80px -30px rgba(20, 26, 46, .45), 0 8px 24px -12px rgba(20, 26, 46, .2);
+  --word-face: "Source Serif 4 Variable";
+  --word-weight: 600;
+  --word-opsz: 32;
+  --serif: var(--word-face), "Noto Sans SC Variable", "PingFang SC", "Microsoft YaHei", Georgia, serif;
+  --sans: "WA Digits", "Atkinson Hyperlegible Next Variable", "Noto Sans SC Variable", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   --r-sm: 10px;
   --r: 16px;
   --r-lg: 24px;
   --r-xl: 32px;
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.4, .5, 1);
   --top: 68px;
   --tab: 0px;
   --gutter: 20px;
+  --motion-feedback: .15s;
+  --motion-enter: .24s;
   color-scheme: light;
+}
+:root[data-font="sans"] {
+  --word-face: "WA Digits", "Atkinson Hyperlegible Next Variable";
+  --word-weight: 700;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,25 +69,30 @@
     --card-2: #19213a;
     --ink: #f2ebdd;
     --ink-2: #c8c1b3;
-    --ink-3: #8d8c94;
+    --ink-3: #9d9ca4;
     --ink-4: #5f6372;
-    --line: rgba(242, 235, 221, 0.08);
-    --line-strong: rgba(242, 235, 221, 0.14);
+    --line: rgba(242, 235, 221, .08);
+    --line-strong: rgba(242, 235, 221, .14);
+    --fill: rgba(242, 235, 221, .06);
+    --fill-2: rgba(242, 235, 221, .1);
+    --thumb: #2a3248;
+    --thumb-shadow: inset 0 .5px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .35), 0 6px 14px -6px rgba(0, 0, 0, .6);
     --terra: #e57c5a;
     --terra-ink: #f29a7b;
-    --terra-soft: rgba(229, 124, 90, 0.16);
+    --terra-soft: rgba(229, 124, 90, .16);
     --ochre: #e8b65a;
-    --ochre-soft: rgba(232, 182, 90, 0.15);
+    --ochre-ink: #e8b65a;
+    --ochre-soft: rgba(232, 182, 90, .15);
     --sage: #97b88e;
     --sage-ink: #b5d1ac;
-    --sage-soft: rgba(151, 184, 142, 0.15);
+    --sage-soft: rgba(151, 184, 142, .15);
     --sky: #8fb2cc;
-    --sky-soft: rgba(143, 178, 204, 0.15);
-    --glow: rgba(232, 182, 90, 0.14);
-    --mark: rgba(232, 182, 90, 0.28);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.7);
-    --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.75);
+    --sky-soft: rgba(143, 178, 204, .15);
+    --glow: rgba(232, 182, 90, .14);
+    --mark: rgba(232, 182, 90, .28);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3);
+    --shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 20px 40px -24px rgba(0, 0, 0, .7);
+    --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, .75);
     color-scheme: dark;
   }
 }
@@ -84,25 +104,30 @@
   --card-2: #19213a;
   --ink: #f2ebdd;
   --ink-2: #c8c1b3;
-  --ink-3: #8d8c94;
+  --ink-3: #9d9ca4;
   --ink-4: #5f6372;
-  --line: rgba(242, 235, 221, 0.08);
-  --line-strong: rgba(242, 235, 221, 0.14);
+  --line: rgba(242, 235, 221, .08);
+  --line-strong: rgba(242, 235, 221, .14);
+  --fill: rgba(242, 235, 221, .06);
+  --fill-2: rgba(242, 235, 221, .1);
+  --thumb: #2a3248;
+  --thumb-shadow: inset 0 .5px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .35), 0 6px 14px -6px rgba(0, 0, 0, .6);
   --terra: #e57c5a;
   --terra-ink: #f29a7b;
-  --terra-soft: rgba(229, 124, 90, 0.16);
+  --terra-soft: rgba(229, 124, 90, .16);
   --ochre: #e8b65a;
-  --ochre-soft: rgba(232, 182, 90, 0.15);
+  --ochre-ink: #e8b65a;
+  --ochre-soft: rgba(232, 182, 90, .15);
   --sage: #97b88e;
   --sage-ink: #b5d1ac;
-  --sage-soft: rgba(151, 184, 142, 0.15);
+  --sage-soft: rgba(151, 184, 142, .15);
   --sky: #8fb2cc;
-  --sky-soft: rgba(143, 178, 204, 0.15);
-  --glow: rgba(232, 182, 90, 0.14);
-  --mark: rgba(232, 182, 90, 0.28);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.7);
-  --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, 0.75);
+  --sky-soft: rgba(143, 178, 204, .15);
+  --glow: rgba(232, 182, 90, .14);
+  --mark: rgba(232, 182, 90, .28);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3);
+  --shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 20px 40px -24px rgba(0, 0, 0, .7);
+  --shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, .75);
   color-scheme: dark;
 }
 
@@ -220,11 +245,11 @@ code {
 
 .display {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: var(--word-weight);
   font-size: clamp(30px, 4.6vw, 52px);
   line-height: 1.12;
   letter-spacing: -0.02em;
-  font-variation-settings: "opsz" 120;
+  font-variation-settings: "opsz" var(--word-opsz);
   text-wrap: balance;
 }
 .display small {
@@ -439,15 +464,12 @@ code {
 }
 :root:lang(ja) {
   --serif:
-    "Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
+    var(--word-face), "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
     Georgia, serif;
   --sans:
-    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
-}
-:lang(ja) .logo-text b,
-:lang(ja) .splash-static,
-:lang(ja) .splash-tag {
-  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+    "WA Digits", "Atkinson Hyperlegible Next Variable", "Hiragino Mincho ProN",
+    "Yu Mincho", "Noto Serif JP", serif;
+  --brand: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
 }
 @media (min-width: 760px) and (max-width: 1100px) {
   .topbar .search-pill {
@@ -685,11 +707,11 @@ code {
   gap: 8px;
 }
 .logo-text b {
-  font: 700 21px/1 "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif;
+  font: 700 21px/1 var(--brand, "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif);
   letter-spacing: 0.06em;
 }
 .logo-text small {
-  font: italic 500 14px/1 var(--serif);
+  font: 500 14px/1 var(--serif);
   color: var(--ink-3);
   letter-spacing: 0.01em;
   font-variation-settings: "opsz" 24;
@@ -919,8 +941,8 @@ code {
 }
 .mini-stats dd {
   margin: 2px 0 0;
-  font: 600 24px/1.1 var(--serif);
-  font-variation-settings: "opsz" 48;
+  font: var(--word-weight) 24px/1.1 var(--serif);
+  font-variation-settings: "opsz" var(--word-opsz);
   font-variant-numeric: tabular-nums;
 }
 .mini-stats dd small {
@@ -987,7 +1009,7 @@ code {
   position: relative;
   font: italic 500 1px/1.05 var(--serif);
   font-size: clamp(14px, calc(150cqw / var(--len)), 22cqw);
-  font-variation-settings: "opsz" 72;
+  font-variation-settings: "opsz" var(--word-opsz);
   text-align: center;
   overflow-wrap: anywhere;
   letter-spacing: -0.01em;
@@ -1058,11 +1080,11 @@ code {
 }
 .headword {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: var(--word-weight);
   font-size: clamp(40px, 7vw, 64px);
   line-height: 1.02;
   letter-spacing: -0.025em;
-  font-variation-settings: "opsz" 144;
+  font-variation-settings: "opsz" var(--word-opsz);
   margin: 8px 0 12px;
   overflow-wrap: anywhere;
 }
@@ -1469,7 +1491,7 @@ code {
   border-radius: 10px;
 }
 .palette-word {
-  font: 600 18px var(--serif);
+  font: var(--word-weight) 18px var(--serif);
   font-variation-settings: "opsz" 24;
 }
 .palette-zh {
@@ -1608,9 +1630,9 @@ code {
   margin-bottom: 10px;
 }
 .journey h2 {
-  font: 600 clamp(34px, 6vw, 56px) / 1.05 var(--serif);
+  font: var(--word-weight) clamp(34px, 6vw, 56px) / 1.05 var(--serif);
   letter-spacing: -0.02em;
-  font-variation-settings: "opsz" 120;
+  font-variation-settings: "opsz" var(--word-opsz);
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
   text-wrap: balance;
 }
@@ -1729,8 +1751,8 @@ code {
   min-width: 0;
 }
 .wotd-word {
-  font: 600 38px/1.05 var(--serif);
-  font-variation-settings: "opsz" 96;
+  font: var(--word-weight) 38px/1.05 var(--serif);
+  font-variation-settings: "opsz" var(--word-opsz);
   letter-spacing: -0.02em;
   margin: 8px 0 10px;
   overflow-wrap: anywhere;
@@ -1786,8 +1808,8 @@ code {
   text-align: center;
 }
 .ring-body b {
-  font: 600 30px/1 var(--serif);
-  font-variation-settings: "opsz" 72;
+  font: var(--word-weight) 30px/1 var(--serif);
+  font-variation-settings: "opsz" var(--word-opsz);
   font-variant-numeric: tabular-nums;
 }
 .ring-body small {
@@ -1917,7 +1939,7 @@ code {
   margin-top: 6px;
 }
 .station-count {
-  font: 600 13px var(--serif);
+  font: var(--word-weight) 13px var(--serif);
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
 }
@@ -2019,7 +2041,7 @@ code {
   color: #fff;
 }
 .topic-tiles b {
-  font: 600 22px/1.1 var(--serif);
+  font: var(--word-weight) 22px/1.1 var(--serif);
 }
 .topic-tiles small {
   font-size: 12px;
@@ -2045,6 +2067,62 @@ code {
 }
 .atlas-head .eyebrow {
   margin-bottom: 12px;
+}
+.atlas-head .display {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+.atlas-title-phrase {
+  display: inline-block;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  html[lang="ja"] .atlas-head .display {
+    font-size: clamp(25px, 7.5vw, 36px);
+  }
+}
+.atlas .chips-scroll {
+  padding-block: 4px;
+}
+.atlas .chip-btn {
+  height: 40px;
+  min-width: 44px;
+  flex-shrink: 0;
+  padding-inline: 16px;
+  border: 0;
+  background: var(--fill);
+  font-size: 14px;
+}
+.atlas .chip-btn.lv {
+  font-family: var(--sans);
+  font-weight: 500;
+}
+.atlas .chip-btn:hover {
+  background: var(--fill-2);
+}
+.atlas .chip-btn.is-on {
+  background: var(--ink);
+  color: var(--paper);
+}
+.atlas .segmented {
+  padding: 4px;
+  border: 0;
+  background: var(--fill);
+}
+.atlas .segmented button {
+  height: 40px;
+  padding-inline: 16px;
+  font-size: 14px;
+}
+.atlas .segmented button.is-on {
+  background: var(--thumb);
+  box-shadow: var(--thumb-shadow);
+  font-weight: 500;
+}
+.atlas .segmented-icons button {
+  width: 44px;
+  padding: 0;
 }
 .search {
   display: flex;
@@ -2159,7 +2237,7 @@ code {
   min-width: 0;
 }
 .tile-word {
-  font: 600 18px/1.2 var(--serif);
+  font: var(--word-weight) 18px/1.2 var(--serif);
   font-variation-settings: "opsz" 24;
   white-space: nowrap;
   overflow: hidden;
@@ -2239,7 +2317,7 @@ code {
   border-radius: 10px;
 }
 .row-word {
-  font: 600 18px var(--serif);
+  font: var(--word-weight) 18px var(--serif);
   font-variation-settings: "opsz" 24;
   white-space: nowrap;
   overflow: hidden;
@@ -2354,7 +2432,7 @@ code {
   min-width: 10px;
 }
 .learn-count {
-  font: 600 16px var(--serif);
+  font: var(--word-weight) 16px var(--serif);
   font-variant-numeric: tabular-nums;
   min-width: 52px;
   text-align: right;
@@ -2683,7 +2761,7 @@ code {
   background: var(--card);
   display: grid;
   place-items: center;
-  font: 600 clamp(20px, 4.6vw, 28px) var(--serif);
+  font: var(--word-weight) clamp(20px, 4.6vw, 28px) var(--serif);
   text-transform: lowercase;
   transition: border-color 0.15s, transform 0.25s var(--spring), background-color 0.2s;
 }
@@ -2780,7 +2858,7 @@ code {
   flex-wrap: wrap;
 }
 .feedback-word b {
-  font: 600 24px var(--serif);
+  font: var(--word-weight) 24px var(--serif);
 }
 .feedback-word .ipa {
   color: var(--ink-3);
@@ -2870,7 +2948,7 @@ code {
 }
 .summary-stats dd {
   margin: 0;
-  font: 600 34px/1.1 var(--serif);
+  font: var(--word-weight) 34px/1.1 var(--serif);
   font-variant-numeric: tabular-nums;
 }
 .summary-stats dd small {
@@ -2901,7 +2979,7 @@ code {
   margin-bottom: 6px;
 }
 .summary-words span {
-  font: 600 15px var(--serif);
+  font: var(--word-weight) 15px var(--serif);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2972,7 +3050,7 @@ code {
   color: var(--ink-3);
 }
 .mode-card b {
-  font: 600 18px var(--serif);
+  font: var(--word-weight) 18px var(--serif);
 }
 .mode-card small {
   color: var(--ink-3);
@@ -3015,7 +3093,7 @@ code {
 }
 .typing-meter b {
   color: var(--ink);
-  font: 600 18px var(--serif);
+  font: var(--word-weight) 18px var(--serif);
 }
 .typing-stage {
   position: relative;
@@ -3056,7 +3134,7 @@ code {
   word-break: break-word;
 }
 .typing-text.is-word {
-  font: 600 clamp(40px, 8vw, 64px) / 1.2 var(--serif);
+  font: var(--word-weight) clamp(40px, 8vw, 64px) / 1.2 var(--serif);
   letter-spacing: 0.02em;
 }
 .typing-text span {
@@ -3119,8 +3197,8 @@ code {
 }
 .stat-strip dd {
   margin: 4px 0 0;
-  font: 600 34px/1 var(--serif);
-  font-variation-settings: "opsz" 72;
+  font: var(--word-weight) 34px/1 var(--serif);
+  font-variation-settings: "opsz" var(--word-opsz);
   font-variant-numeric: tabular-nums;
 }
 .stat-strip dd small {
@@ -3201,7 +3279,7 @@ code {
   background: linear-gradient(180deg, var(--sky), color-mix(in oklab, var(--sky) 60%, var(--paper-2)));
 }
 .forecast b {
-  font: 600 15px var(--serif);
+  font: var(--word-weight) 15px var(--serif);
   font-variant-numeric: tabular-nums;
 }
 .forecast small {
@@ -3760,7 +3838,7 @@ a:hover .mark-needle,
   pointer-events: none;
 }
 .splash-tag {
-  font: 600 clamp(20px, 3vw, 30px) / 1.2 "Songti SC", "STSong", "Noto Serif SC", serif;
+  font: 600 clamp(20px, 3vw, 30px) / 1.2 var(--brand, "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif);
   letter-spacing: 0.32em;
   padding-left: 0.32em;
   opacity: 0;
@@ -3861,11 +3939,11 @@ a:hover .mark-needle,
   place-content: center;
   justify-items: center;
   gap: 8px;
-  font: 700 72px "Songti SC", serif;
+  font: 700 72px var(--brand, "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif);
   transition: opacity 0.4s;
 }
 .splash-static small {
-  font: 600 14px var(--serif);
+  font: var(--word-weight) 14px var(--serif);
   letter-spacing: 0.4em;
   opacity: 0.7;
 }
@@ -3963,7 +4041,7 @@ a:hover .mark-needle,
   min-width: 0;
 }
 .galaxy-tip b {
-  font: 600 19px var(--serif);
+  font: var(--word-weight) 19px var(--serif);
   font-variation-settings: "opsz" 30;
 }
 .galaxy-tip small {
@@ -3984,7 +4062,7 @@ a:hover .mark-needle,
   color: rgba(243, 236, 223, 0.7);
 }
 .galaxy-hud b {
-  font: 600 30px var(--serif);
+  font: var(--word-weight) 30px var(--serif);
   color: #ffe2a8;
   margin-right: 4px;
   font-variant-numeric: tabular-nums;
@@ -4084,7 +4162,7 @@ a:hover .mark-needle,
   justify-items: start;
 }
 .galaxy-panel-copy h3 {
-  font: 600 clamp(28px, 4vw, 40px) / 1.1 var(--serif);
+  font: var(--word-weight) clamp(28px, 4vw, 40px) / 1.1 var(--serif);
   letter-spacing: -0.01em;
 }
 .galaxy-panel-copy h3 b {
@@ -4127,7 +4205,7 @@ a:hover .mark-needle,
   right: 0;
   bottom: 18px;
   z-index: 2;
-  font: 600 18px var(--serif);
+  font: var(--word-weight) 18px var(--serif);
   color: #ffe2a8;
   letter-spacing: 0.08em;
   text-shadow: 0 0 20px rgba(255, 210, 140, 0.5);
