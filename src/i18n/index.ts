@@ -3,12 +3,26 @@ import { useSyncExternalStore } from "react";
 export type Language = "zh" | "ja";
 export const LANGUAGE_KEY = "word-atlas:language";
 
+export function resolveLanguage(
+  savedLanguage: string | null,
+  browserLanguage?: string,
+): Language {
+  if (savedLanguage === "zh" || savedLanguage === "ja") return savedLanguage;
+  return /^zh(?:[-_]|$)/i.test(browserLanguage ?? "") ? "zh" : "ja";
+}
+
 function readLanguage(): Language {
+  let savedLanguage: string | null = null;
   try {
-    return localStorage.getItem(LANGUAGE_KEY) === "ja" ? "ja" : "zh";
+    savedLanguage = localStorage.getItem(LANGUAGE_KEY);
   } catch {
-    return "zh";
+    // Browser language still works when browser storage is unavailable.
   }
+  const browserLanguage =
+    typeof navigator === "undefined"
+      ? undefined
+      : navigator.languages?.[0] || navigator.language;
+  return resolveLanguage(savedLanguage, browserLanguage);
 }
 
 let language = readLanguage();
@@ -23,13 +37,13 @@ export const translate = (zh: string, ja: string) =>
   translators[language](zh, ja);
 
 export function setLanguage(next: Language) {
-  if (next === language) return;
-  language = next;
   try {
     localStorage.setItem(LANGUAGE_KEY, next);
   } catch {
     // The selection still works for this visit when browser storage is unavailable.
   }
+  if (next === language) return;
+  language = next;
   listeners.forEach((listener) => listener());
 }
 
@@ -54,7 +68,7 @@ export function useI18n() {
   const language = useSyncExternalStore(
     subscribe,
     getLanguage,
-    () => "zh" as const,
+    () => "ja" as const,
   );
   return { language, t: translators[language] };
 }

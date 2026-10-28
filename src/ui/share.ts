@@ -1,9 +1,7 @@
 import { translate as t } from "../i18n";
+import { getCanvasFonts } from "../i18n/fonts";
 import type { Atlas, Entry } from "../atlas/types";
 import { toast } from "./Toast";
-
-const SERIF = '"Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif SC", Georgia, serif';
-const SANS = '-apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif';
 
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -40,6 +38,7 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
 }
 
 export async function renderWordCard(atlas: Atlas, e: Entry) {
+  const { serif: SERIF, sans: SANS } = getCanvasFonts();
   const W = 1080;
   const H = 1440;
   const c = document.createElement("canvas");

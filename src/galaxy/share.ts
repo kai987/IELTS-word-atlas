@@ -1,11 +1,10 @@
 import { translate as t } from "../i18n";
+import { getCanvasFonts } from "../i18n/fonts";
 import { toast } from "../ui/Toast";
-
-const SERIF = '"Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif SC", Georgia, serif';
-const SANS = '-apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
 /** "My word galaxy": the live render framed as a 4:5 poster. */
 export async function shareGalaxy(source: HTMLCanvasElement, lit: number, total: number) {
+  const { serif: SERIF, sans: SANS } = getCanvasFonts();
   try {
     const W = 1080;
     const H = 1350;

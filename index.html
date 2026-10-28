@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -18,16 +18,22 @@
     <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
     <link rel="preload" href="%BASE_URL%atlas/index.json" as="fetch" crossorigin="anonymous" />
     <script>
-      // Apply the saved theme (dark by default) before first paint.
+      // Apply the theme and display language before first paint.
       (function () {
         var t = "dark";
         try {
           var s = JSON.parse(localStorage.getItem("word-atlas:settings") || "{}");
           if (s.theme) t = s.theme;
         } catch (e) {}
+        var savedLanguage = null;
         try {
-          document.documentElement.lang = localStorage.getItem("word-atlas:language") === "ja" ? "ja" : "zh-CN";
+          savedLanguage = localStorage.getItem("word-atlas:language");
         } catch (e) {}
+        var browserLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+        var language = savedLanguage === "zh" || savedLanguage === "ja"
+          ? savedLanguage
+          : /^zh(?:[-_]|$)/i.test(browserLanguage) ? "zh" : "ja";
+        document.documentElement.lang = language === "zh" ? "zh-CN" : "ja";
         if (t !== "system") document.documentElement.setAttribute("data-theme", t);
       })();
     </script>

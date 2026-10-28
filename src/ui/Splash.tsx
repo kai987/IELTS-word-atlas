@@ -1,4 +1,5 @@
-import { getLanguage, translate, useI18n } from "../i18n";
+import { useI18n, type Language } from "../i18n";
+import { JAPANESE_FONT_FAMILY } from "../i18n/fonts";
 import { useEffect, useRef, useState } from "react";
 import { duck, playFile, preloadFiles } from "../lib/sound";
 import { dayKey, store } from "../store/store";
@@ -42,7 +43,7 @@ interface P {
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
 
 /** Sample bright pixels of the logo, the localized name and the wordmark as particle targets. */
-function targets(w: number, h: number, count: number) {
+function targets(w: number, h: number, count: number, language: Language) {
   const c = document.createElement("canvas");
   c.width = w;
   c.height = h;
@@ -72,10 +73,13 @@ function targets(w: number, h: number, count: number) {
   g.closePath();
   g.fill();
   const zh = Math.min(w * 0.3, s * 0.24);
-  g.font = `700 ${zh}px "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif`;
+  const titleFont = language === "ja"
+    ? JAPANESE_FONT_FAMILY
+    : '"Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif';
+  g.font = `700 ${zh}px ${titleFont}`;
   g.textAlign = "center";
   g.textBaseline = "middle";
-  g.fillText(translate("词光", "詞光"), cx, cy + R + zh * 0.78);
+  g.fillText(language === "ja" ? "詞光" : "词光", cx, cy + R + zh * 0.78);
   const en = Math.max(18, zh * 0.24);
   g.font = `700 ${en}px "Fraunces Variable", Georgia, serif`;
   g.letterSpacing = `${en * 0.34}px`;
@@ -94,16 +98,17 @@ function targets(w: number, h: number, count: number) {
 
 export function Splash({ onDone }: { onDone: () => void }) {
   const { t, language } = useI18n();
+  const welcomeVoice = language === "ja" ? "splash-voice-ja-morioki.mp3" : "splash-voice.mp3";
   const canvas = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState<"gather" | "ready" | "open">("gather");
   const opening = useRef(false);
   const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
-    preloadFiles([...(language === "zh" ? ["splash-voice.mp3"] : []), "splash-door.mp3", "splash-burst.mp3"]);
+    preloadFiles([welcomeVoice, "splash-door.mp3", "splash-burst.mp3"]);
     const t = window.setTimeout(() => setPhase((p) => (p === "gather" ? "ready" : p)), reduce ? 300 : 2100);
     return () => window.clearTimeout(t);
-  }, [reduce, language]);
+  }, [reduce, welcomeVoice]);
 
   useEffect(() => {
     const cv = canvas.current;
@@ -116,7 +121,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
     const g = cv.getContext("2d")!;
     g.scale(dpr, dpr);
     const N = w < 700 ? 2600 : 5200;
-    const { pts, wordTop } = targets(w, h, N);
+    const { pts, wordTop } = targets(w, h, N, language);
     const pick = (): string => {
       let r = Math.random();
       for (const [c, p] of PALETTE) if ((r -= p) <= 0) return c;
@@ -218,7 +223,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
     if (sound && store.get().settings.sfx) {
       void playFile("splash-burst.mp3", 0.55);
       void playFile("splash-door.mp3", 0.6, 0.12);
-      if (getLanguage() === "zh") void playFile("splash-voice.mp3", 0.95, 0.35);
+      void playFile(welcomeVoice, 0.95, 0.35);
       // Let the welcome line sit above the music that fades in with the doors.
       duck(true);
       window.setTimeout(() => duck(false), 3200);

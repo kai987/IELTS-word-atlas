@@ -21,6 +21,27 @@ The interface supports Chinese (`zh`) and Japanese (`ja`). The language selector
 uses `中` and `日`, and stores the choice locally. English headwords, example
 sentences and English audio remain the learning material in both languages.
 
+Without a saved selection, the initial language follows the browser's primary
+preferred language (`navigator.languages[0]`): Chinese locales use Chinese; Japanese and all other locales use
+Japanese. A valid manual selection takes precedence on later visits. The inline
+startup script and the application resolve the language consistently, including
+when browser storage is blocked. Japanese interface and canvas text use
+`"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif`; English display text
+retains Fraunces.
+The splash samples the active language's title into particle targets (`詞光` in
+Japanese, `词光` in Chinese), with matching text in reduced-motion mode. The
+particle gathering, dispersal and opening-door transitions remain available.
+Browser preferences can differ from the macOS display language. A web page uses
+the preference exposed by the browser; selecting Japanese in the language menu
+keeps Japanese on subsequent visits without changing browser-wide settings.
+
+Clicking the Japanese splash plays `public/sfx/splash-voice-ja-morioki.mp3`,
+generated locally with AivisSpeech (`morioki`, `ノーマル`, style `497929760`).
+The synthesis text is `アイエルツへの扉を開こう。`, matching the displayed
+`IELTSへの扉を開こう` and keeping the IELTS pronunciation natural. Chinese mode
+retains its original recording. The voice-specific URL avoids reusing a cached
+recording from another synthesizer.
+
 The original English/Chinese vocabulary corpus remains the source of truth. Japanese text uses a
 static overlay in `public/atlas/ja/`, with matching entry IDs, order and chunk size:
 

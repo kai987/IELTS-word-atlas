@@ -1,12 +1,10 @@
 import { translate as t } from "../i18n";
+import { getCanvasFonts } from "../i18n/fonts";
 import type { Atlas } from "../atlas/types";
 import { sessionStats } from "../store/session";
 import { Rating } from "../store/srs";
 import type { ActiveSession } from "../store/store";
 import { toast } from "./Toast";
-
-const SERIF = '"Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif SC", Georgia, serif';
-const SANS = '-apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
 const load = (src: string) =>
   new Promise<HTMLImageElement | null>((r) => {
@@ -18,6 +16,7 @@ const load = (src: string) =>
 
 /** A 4:5 "today I learned" card: a mosaic of the session's illustrations plus first-try accuracy. */
 export async function shareSession(atlas: Atlas, s: ActiveSession) {
+  const { serif: SERIF, sans: SANS } = getCanvasFonts();
   try {
     const W = 1080;
     const H = 1350;

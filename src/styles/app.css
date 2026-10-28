@@ -442,11 +442,11 @@ code {
     "Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
     Georgia, serif;
   --sans:
-    -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic",
-    "Noto Sans JP", "Segoe UI", sans-serif;
+    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
 }
 :lang(ja) .logo-text b,
-:lang(ja) .splash-static {
+:lang(ja) .splash-static,
+:lang(ja) .splash-tag {
   font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
 }
 @media (min-width: 760px) and (max-width: 1100px) {
