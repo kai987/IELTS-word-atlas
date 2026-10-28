@@ -1,3 +1,4 @@
+import { getLanguage, translate, useI18n } from "../i18n";
 import { useEffect, useRef, useState } from "react";
 import { duck, playFile, preloadFiles } from "../lib/sound";
 import { dayKey, store } from "../store/store";
@@ -40,7 +41,7 @@ interface P {
 
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
 
-/** Sample bright pixels of the logo, the Chinese name and the wordmark as particle targets. */
+/** Sample bright pixels of the logo, the localized name and the wordmark as particle targets. */
 function targets(w: number, h: number, count: number) {
   const c = document.createElement("canvas");
   c.width = w;
@@ -71,10 +72,10 @@ function targets(w: number, h: number, count: number) {
   g.closePath();
   g.fill();
   const zh = Math.min(w * 0.3, s * 0.24);
-  g.font = `700 ${zh}px "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif`;
+  g.font = `700 ${zh}px "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif`;
   g.textAlign = "center";
   g.textBaseline = "middle";
-  g.fillText("词光", cx, cy + R + zh * 0.78);
+  g.fillText(translate("词光", "詞光"), cx, cy + R + zh * 0.78);
   const en = Math.max(18, zh * 0.24);
   g.font = `700 ${en}px "Fraunces Variable", Georgia, serif`;
   g.letterSpacing = `${en * 0.34}px`;
@@ -92,16 +93,17 @@ function targets(w: number, h: number, count: number) {
 }
 
 export function Splash({ onDone }: { onDone: () => void }) {
+  const { t, language } = useI18n();
   const canvas = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState<"gather" | "ready" | "open">("gather");
   const opening = useRef(false);
   const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
-    preloadFiles(["splash-voice.mp3", "splash-door.mp3", "splash-burst.mp3"]);
+    preloadFiles([...(language === "zh" ? ["splash-voice.mp3"] : []), "splash-door.mp3", "splash-burst.mp3"]);
     const t = window.setTimeout(() => setPhase((p) => (p === "gather" ? "ready" : p)), reduce ? 300 : 2100);
     return () => window.clearTimeout(t);
-  }, [reduce]);
+  }, [reduce, language]);
 
   useEffect(() => {
     const cv = canvas.current;
@@ -203,7 +205,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
     };
     raf = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(raf);
-  }, [reduce]);
+  }, [reduce, language]);
 
   const open = (sound = true) => {
     if (opening.current) return;
@@ -216,7 +218,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
     if (sound && store.get().settings.sfx) {
       void playFile("splash-burst.mp3", 0.55);
       void playFile("splash-door.mp3", 0.6, 0.12);
-      void playFile("splash-voice.mp3", 0.95, 0.35);
+      if (getLanguage() === "zh") void playFile("splash-voice.mp3", 0.95, 0.35);
       // Let the welcome line sit above the music that fades in with the doors.
       duck(true);
       window.setTimeout(() => duck(false), 3200);
@@ -237,22 +239,22 @@ export function Splash({ onDone }: { onDone: () => void }) {
   }); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className={`splash is-${phase} ${reduce ? "is-reduced" : ""}`} onClick={() => open()} role="dialog" aria-label="欢迎打开雅思大门，点击进入">
+    <div className={`splash is-${phase} ${reduce ? "is-reduced" : ""}`} onClick={() => open()} role="dialog" aria-label={t("欢迎打开雅思大门，点击进入", "IELTSへの扉へようこそ。クリックして始めましょう")}>
       <div className="door door-l" />
       <div className="door door-r" />
       <div className="splash-light" />
       <canvas ref={canvas} className="splash-canvas" aria-hidden="true" />
       {reduce && (
         <div className="splash-static">
-          <b>词光</b>
+          <b>{t("词光", "詞光")}</b>
           <small>WORD ATLAS</small>
         </div>
       )}
       <div className="splash-copy">
-        <p className="splash-tag">欢迎打开雅思大门</p>
+        <p className="splash-tag">{t("欢迎打开雅思大门", "IELTSへの扉を開こう")}</p>
         <p className="splash-hint">
           <span className="splash-key" />
-          点击开启 · 按任意键
+          {t("点击开启 · 按任意键", "クリック、またはキーを押してスタート")}
         </p>
       </div>
       <button
@@ -262,7 +264,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
           open(false);
         }}
       >
-        跳过
+        {t("跳过", "スキップ")}
       </button>
     </div>
   );

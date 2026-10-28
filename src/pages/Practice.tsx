@@ -1,6 +1,7 @@
+import { useI18n } from "../i18n";
 import { Headphones, Keyboard, RotateCcw, Type } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { prefetch, useAtlas } from "../atlas/context";
+import { prefetch, useAtlas, useEntry } from "../atlas/context";
 import type { Entry } from "../atlas/types";
 import { play, stopAudio } from "../lib/audio";
 import { cue } from "../lib/sound";
@@ -13,19 +14,19 @@ import { Illustration } from "../ui/Illustration";
 type Mode = "word" | "sentence" | "dictation";
 type Source = "recent" | "mistakes" | "saved" | "path";
 
-const MODES: [Mode, string, string, typeof Type][] = [
-  ["word", "单词", "看图写出单词", Type],
-  ["sentence", "例句", "照着抄写，练出手感", Keyboard],
-  ["dictation", "听写", "只听声音，写下整句", Headphones],
-];
-const SOURCES: [Source, string][] = [
-  ["recent", "最近学过"],
-  ["mistakes", "错词本"],
-  ["saved", "收藏"],
-  ["path", "学习路线"],
-];
-
 export function Practice() {
+  const { t } = useI18n();
+  const MODES: [Mode, string, string, typeof Type][] = [
+    ["word", t("单词", "単語"), t("看图写出单词", "絵を見て単語を入力"), Type],
+    ["sentence", t("例句", "例文"), t("照着抄写，练出手感", "例文を書き写して入力に慣れる"), Keyboard],
+    ["dictation", t("听写", "ディクテーション"), t("只听声音，写下整句", "音声だけを聞いて文全体を入力"), Headphones],
+  ];
+  const SOURCES: [Source, string][] = [
+    ["recent", t("最近学过", "最近の学習")],
+    ["mistakes", t("错词本", "間違えた単語")],
+    ["saved", t("收藏", "お気に入り")],
+    ["path", t("学习路线", "学習ルート")],
+  ];
   const atlas = useAtlas();
   const progress = useStore((s) => s.progress);
   const startLevel = useStore((s) => s.settings.startLevel);
@@ -54,13 +55,13 @@ export function Practice() {
   return (
     <div className="page practice">
       <header className="page-head">
-        <p className="eyebrow">练习 · Typing Studio</p>
-        <h1 className="display">让手，也记住它们。</h1>
-        <p className="lede">打字只练拼写和手感，不会改动记忆进度。</p>
+        <p className="eyebrow">{t("练习 · Typing Studio", "練習 · Typing Studio")}</p>
+        <h1 className="display">{t("让手，也记住它们。", "手でも、覚えよう。")}</h1>
+        <p className="lede">{t("打字只练拼写和手感，不会改动记忆进度。", "タイピングでスペルと入力の感覚を練習します。記憶の学習状況には影響しません。")}</p>
       </header>
       <div className="practice-grid">
         <section className="panel">
-          <h3 className="eyebrow">模式</h3>
+          <h3 className="eyebrow">{t("模式", "モード")}</h3>
           <div className="mode-cards">
             {MODES.map(([k, name, desc, Icon]) => (
               <button key={k} className={`mode-card ${mode === k ? "is-on" : ""}`} onClick={() => setMode(k)} aria-pressed={mode === k}>
@@ -70,7 +71,7 @@ export function Practice() {
               </button>
             ))}
           </div>
-          <h3 className="eyebrow">词来自</h3>
+          <h3 className="eyebrow">{t("词来自", "出題元")}</h3>
           <div className="segmented segmented-wide">
             {SOURCES.map(([k, label]) => (
               <button key={k} className={source === k ? "is-on" : ""} onClick={() => setSource(k)} aria-pressed={source === k}>
@@ -81,30 +82,30 @@ export function Practice() {
           <p className="muted">
             {pool.length
               ? source === "path"
-                ? "从学习路线的前 400 个词里随机抽 10 个。"
-                : `可练 ${pool.length} 个词，每轮随机 10 个。`
-              : "这里还没有词，先去学几个，或换个来源。"}
+                ? t("从学习路线的前 400 个词里随机抽 10 个。", "学習ルートの最初の400語から、ランダムに10語を出題します。")
+                : t(`可练 ${pool.length} 个词，每轮随机 10 个。`, `${pool.length}語を練習できます。毎回ランダムに10語を出題します。`)
+              : t("这里还没有词，先去学几个，或换个来源。", "まだ単語がありません。先にいくつか学習するか、出題元を変えてください。")}
           </p>
           <button className="btn btn-primary btn-xl" onClick={start} disabled={!pool.length}>
-            开始一轮
+            {t("开始一轮", "練習を始める")}
           </button>
         </section>
         <section className="panel practice-side">
           <img src={`${import.meta.env.BASE_URL}brand/${mode === "dictation" ? "listen" : "typing"}.webp`} alt="" />
           <dl className="mini-stats">
             <div>
-              <dt>最佳速度</dt>
+              <dt>{t("最佳速度", "最高速度")}</dt>
               <dd>
                 {best}
                 <small>WPM</small>
               </dd>
             </div>
             <div>
-              <dt>完成轮次</dt>
+              <dt>{t("完成轮次", "完了した回数")}</dt>
               <dd>{progress.typing.length}</dd>
             </div>
           </dl>
-          <p className="muted">WPM 按标准每 5 个字符计 1 词，只统计正确输入。</p>
+          <p className="muted">{t("WPM 按标准每 5 个字符计 1 词，只统计正确输入。", "WPMは5文字を1語として計算し、正しく入力した文字のみを数えます。")}</p>
         </section>
       </div>
     </div>
@@ -112,6 +113,7 @@ export function Practice() {
 }
 
 function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: Entry[]; onExit: () => void; onAgain: () => void }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const settings = useStore((s) => s.settings);
   const [i, setI] = useState(0);
@@ -123,6 +125,11 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
   const started = useRef<number | null>(null);
   const input = useRef<HTMLInputElement>(null);
   const e = entries[i];
+  const { entry: localizedEntry, error: entryError } = useEntry(e.id);
+  const currentEntry = atlas.peek(e.id) ?? localizedEntry;
+  const pendingCue = entryError
+    ? <span role="alert">{entryError}</span>
+    : <span className="spinner" role="status" aria-label={t("正在加载释义…", "意味を読み込み中…")} />;
   const target = mode === "word" ? e.w : e.ex[0].en;
 
   useEffect(() => {
@@ -169,17 +176,17 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
     return (
       <div className="page practice">
         <section className="panel typing-done">
-          <p className="eyebrow">本轮完成</p>
+          <p className="eyebrow">{t("本轮完成", "今回の練習が完了")}</p>
           <h1 className="display">
             {m.wpm} <small>WPM</small>
           </h1>
-          <p className="lede">准确率 {m.accuracy}% · {entries.length} 项</p>
+          <p className="lede">{t(`准确率 ${m.accuracy}% · ${entries.length} 项`, `正確率 ${m.accuracy}% · ${entries.length}問`)}</p>
           <div className="summary-actions">
             <button className="btn btn-ghost" onClick={onExit}>
-              返回
+              {t("返回", "戻る")}
             </button>
             <button className="btn btn-primary btn-xl" onClick={onAgain} autoFocus>
-              <RotateCcw size={18} /> 再来一轮
+              <RotateCcw size={18} /> {t("再来一轮", "もう一度練習")}
             </button>
           </div>
         </section>
@@ -190,7 +197,7 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
     <div className="page practice typing">
       <header className="typing-top">
         <button className="btn btn-ghost" onClick={onExit}>
-          结束
+          {t("结束", "終了")}
         </button>
         <AmbiencePicker />
         <div className="learn-progress">
@@ -205,7 +212,7 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
           <div className="typing-cue">
             <Illustration src={atlas.img(e)} word={e.w} topic={0} eager />
             <p>
-              <span className="pos">{e.senses[0].pos}</span> {e.senses[0].zh}
+              {currentEntry ? <><span className="pos">{currentEntry.senses[0].pos}</span> {currentEntry.senses[0].zh}</> : pendingCue}
             </p>
           </div>
         )}
@@ -213,10 +220,10 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
           <p className="typing-zh">
             {mode === "dictation" && (
               <button className="link" onClick={() => play(atlas.audio(e, "ex"), e.ex[0].en, settings.accent)}>
-                再听一遍
+                {t("再听一遍", "もう一度聞く")}
               </button>
             )}
-            {e.ex[0].zh}
+            {currentEntry ? currentEntry.ex[0].zh : pendingCue}
           </p>
         )}
         <p className={`typing-text ${mode === "word" ? "is-word" : ""} ${mode === "dictation" ? "is-hidden" : ""}`} lang="en" aria-hidden="true">
@@ -241,10 +248,10 @@ function TypingRound({ mode, entries, onExit, onAgain }: { mode: Mode; entries: 
           autoCorrect="off"
           autoComplete="off"
           spellCheck={false}
-          aria-label="在这里输入"
+          aria-label={t("在这里输入", "ここに入力")}
         />
         <p className="muted typing-help">
-          {mode === "dictation" ? "听不清可以点「再听一遍」。" : "直接开始输入，全部正确后自动进入下一项。"} 第 {i + 1}/{entries.length} 项
+          {mode === "dictation" ? t("听不清可以点「再听一遍」。", "聞き取れなければ「もう一度聞く」を押してください。") : t("直接开始输入，全部正确后自动进入下一项。", "そのまま入力してください。すべて正しく入力すると自動で次へ進みます。")} {t(`第 ${i + 1}/${entries.length} 项`, `${i + 1}/${entries.length}問目`)}
         </p>
       </section>
     </div>

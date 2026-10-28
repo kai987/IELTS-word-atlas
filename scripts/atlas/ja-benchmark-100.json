@@ -1,0 +1,1277 @@
+{
+  "version": 1,
+  "seed": 20261026,
+  "count": 100,
+  "sourceIndexSha256": "514b9eb3b257511d6823eadd27a03f9cfa33f4bb5629236820f558cbda5de37d",
+  "selectionMethod": "12 known-risk sentinels plus88 seeded stratified entries; CEFR quotas fixed; all19 topics covered. Long sentences mean18–19 words (corpus maximum19). Not a simple population-random sample.",
+  "sourcePolicy": "English for bilingual meanings, examples and collocations; Chinese for Chinese-only tips/notes.",
+  "generation": {
+    "temperature": 0.1,
+    "seed": 42,
+    "top_k": 40,
+    "top_p": 0.95,
+    "repeat_penalty": 1,
+    "presence_penalty": 0,
+    "num_ctx": 4096,
+    "draft_num_predict": 2048,
+    "review_num_predict": 2048
+  },
+  "models": {
+    "q4": {
+      "draft": "translategemma:12b",
+      "review": "qwen3.5:9b"
+    },
+    "q8": {
+      "draft": "translategemma:12b-it-q8_0",
+      "review": "qwen3.5:9b-q8_0"
+    }
+  },
+  "scoring": {
+    "unit": "field; count at most one substantive error per field; also count entries with any error",
+    "substantiveCategories": [
+      "wrong_meaning",
+      "omission",
+      "addition_or_fabrication",
+      "negation_or_modality",
+      "quantity_time_or_entity",
+      "grammar_or_terminology",
+      "untranslated"
+    ],
+    "exclude": [
+      "acceptable synonymous wording",
+      "style preference alone"
+    ],
+    "formatFailures": "reported separately and count omitted fields; do not manually repair model output before scoring",
+    "review": "independent source-grounded evaluation with quantization labels masked; model approval is not the quality judge"
+  },
+  "strata": {
+    "cefr": {
+      "A1": 15,
+      "A2": 15,
+      "B1": 20,
+      "B2": 20,
+      "C1": 15,
+      "C2": 15
+    },
+    "topics": {
+      "daily": 22,
+      "travel": 4,
+      "arts": 9,
+      "work": 5,
+      "emotion": 6,
+      "health": 3,
+      "economy": 2,
+      "technology": 3,
+      "environment": 4,
+      "society": 8,
+      "nature": 6,
+      "education": 6,
+      "city": 2,
+      "government": 3,
+      "science": 6,
+      "thinking": 4,
+      "sport": 2,
+      "media": 2,
+      "history": 3
+    },
+    "tags": {
+      "modality": 67,
+      "kinship": 15,
+      "polysemy": 34,
+      "quantity": 12,
+      "grammar_tip": 40,
+      "negation_or_condition": 16,
+      "long_sentence": 11
+    },
+    "translationFields": 829
+  },
+  "entries": [
+    {
+      "id": "sister",
+      "chunk": 0,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "known-risk",
+      "tags": [
+        "modality",
+        "kinship"
+      ],
+      "sourceSha256": "ec3071a9654c4cbddf33394cc8f63bf67af38e474b4f6674d4479df84117d380"
+    },
+    {
+      "id": "europe",
+      "chunk": 2,
+      "cefr": "A1",
+      "topic": "travel",
+      "selection": "known-risk",
+      "tags": [
+        "kinship"
+      ],
+      "sourceSha256": "24466ec5dadad6b8dba6e8b3bf283f4461f4091cae90dd7ecf8262114b6ad4f6"
+    },
+    {
+      "id": "clear",
+      "chunk": 8,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "known-risk",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "105ce24651b92026d054d7eec532f42aa41d51fef38ea04e3fdd2ef49a8dd242"
+    },
+    {
+      "id": "kilo",
+      "chunk": 13,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "known-risk",
+      "tags": [
+        "quantity",
+        "modality"
+      ],
+      "sourceSha256": "a67ec1d199ab6f49d14c9076e420058378272d5cff3c6dc681c95de4d2a7570b"
+    },
+    {
+      "id": "cabin",
+      "chunk": 21,
+      "cefr": "B1",
+      "topic": "travel",
+      "selection": "known-risk",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "79018c574f1dc20efa288ece673d89d746e6876e0505cee29b209fee1a3ee717"
+    },
+    {
+      "id": "carnival",
+      "chunk": 26,
+      "cefr": "B1",
+      "topic": "arts",
+      "selection": "known-risk",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "75e02fd278fd67ef5585f0465599871919297076b2e2cea65c88be2217413ffe"
+    },
+    {
+      "id": "signature",
+      "chunk": 32,
+      "cefr": "B1",
+      "topic": "daily",
+      "selection": "known-risk",
+      "tags": [],
+      "sourceSha256": "bfe1cb68801d3d602ef2e82bd25137f038ece0ab89efdfaa854256b1eef5c309"
+    },
+    {
+      "id": "entrepreneur",
+      "chunk": 37,
+      "cefr": "B2",
+      "topic": "work",
+      "selection": "known-risk",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "236ad8979d26ef6ba6ee4bc3ed1ee614c3113a760b5748cb831bd7c7bac5fcaa"
+    },
+    {
+      "id": "bitterly",
+      "chunk": 39,
+      "cefr": "B2",
+      "topic": "emotion",
+      "selection": "known-risk",
+      "tags": [],
+      "sourceSha256": "66f589e7360d5359e2ce013f85aba00eec2ea0b4ea1f4667a56fe3826b11b845"
+    },
+    {
+      "id": "seldom",
+      "chunk": 43,
+      "cefr": "B2",
+      "topic": "daily",
+      "selection": "known-risk",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "6ce40997593439aa0cd77616bc22dc85eff4bc4043fdcd549ae7a9413469c78a"
+    },
+    {
+      "id": "execution",
+      "chunk": 56,
+      "cefr": "C1",
+      "topic": "work",
+      "selection": "known-risk",
+      "tags": [
+        "polysemy"
+      ],
+      "sourceSha256": "1272e6073c82c93c4cfff138c34abf114f574b60ab51a1f62bfbbf9d4008c403"
+    },
+    {
+      "id": "delirium",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "health",
+      "selection": "known-risk",
+      "tags": [],
+      "sourceSha256": "2e63291ccbcad153a236da7695861a7762ac050c1c313a6098a7d6afbbc41f87"
+    },
+    {
+      "id": "growth",
+      "chunk": 21,
+      "cefr": "B1",
+      "topic": "economy",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "79f65aee1b086ec5e0a60fb6ecaa85c35a815950efb9083d48d0442ad9a0dddd"
+    },
+    {
+      "id": "refinement",
+      "chunk": 66,
+      "cefr": "C1",
+      "topic": "technology",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "e525ac7416b00c01e97dafe336ee97343ecf67c0fa294c8075a08b2f612af0e6"
+    },
+    {
+      "id": "obliterate",
+      "chunk": 72,
+      "cefr": "C2",
+      "topic": "environment",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "long_sentence",
+        "grammar_tip"
+      ],
+      "sourceSha256": "cd80be264e50cec0416df9b4529ece4b0a6b851608c88cbbc6eb93cd466679c2"
+    },
+    {
+      "id": "assurance",
+      "chunk": 69,
+      "cefr": "C1",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "long_sentence",
+        "grammar_tip"
+      ],
+      "sourceSha256": "f5a5b808288bbe5ae3b6c5c668433544b5762fef314f0b4632bba615754aad00"
+    },
+    {
+      "id": "cycle",
+      "chunk": 23,
+      "cefr": "B1",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "32e8ed8b3096a8051f4786fb296b61fefb6817a023feacc58a1bfef33f77c12d"
+    },
+    {
+      "id": "failure",
+      "chunk": 30,
+      "cefr": "B1",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "fc23bc553e04f117ee75232342578e310395295d6c740d894e5889ea557c60bc"
+    },
+    {
+      "id": "pipe",
+      "chunk": 27,
+      "cefr": "B1",
+      "topic": "city",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "a6a71c71f2226d4e86a2845a1b53749cc1f958872d1beb712582beff27398dc4"
+    },
+    {
+      "id": "democracy",
+      "chunk": 48,
+      "cefr": "B2",
+      "topic": "government",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "grammar_tip"
+      ],
+      "sourceSha256": "5d93adb411970c8c8b0bee0f767758db6a6a1a38a24e00bb5dd0e2f8fad1ff54"
+    },
+    {
+      "id": "alga",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "long_sentence",
+        "grammar_tip"
+      ],
+      "sourceSha256": "011849d80be3a4c2055d19a40fdb1640030a72291873d928ff046311d0c6fc3a"
+    },
+    {
+      "id": "reason",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "thinking",
+      "selection": "stratified",
+      "tags": [
+        "long_sentence",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "fbc712129125eeb2fb026dbf6fa848fc40670bcf3ebae56176e5a707c097cc4a"
+    },
+    {
+      "id": "golf",
+      "chunk": 17,
+      "cefr": "A2",
+      "topic": "sport",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "kinship",
+        "grammar_tip"
+      ],
+      "sourceSha256": "749f718ed9a9370d2ecb38a7486bf8f46096964ca0b7e1910f096ba8749b3e42"
+    },
+    {
+      "id": "text",
+      "chunk": 9,
+      "cefr": "A2",
+      "topic": "media",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "3134f9f7086fd6ad1b1fab20d78bcea6895b3e6e6eead5923fec72051a1b05cc"
+    },
+    {
+      "id": "warfare",
+      "chunk": 67,
+      "cefr": "C1",
+      "topic": "history",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "d0f12b945e3ed05436dffcc08df23acf8b8bb4668847cbf9bf60f3f385ed8ce5"
+    },
+    {
+      "id": "fellowship",
+      "chunk": 62,
+      "cefr": "C1",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "kinship",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "41cde9404aa9b9ff8dfa3f98194420a156530e0685d8a1f2f894ba1541bbe334"
+    },
+    {
+      "id": "yield",
+      "chunk": 52,
+      "cefr": "B2",
+      "topic": "economy",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "quantity",
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "bcd11994f30336331e2fb689ebc851b11b2d3e07f51371757d7fcf17a0721dfa"
+    },
+    {
+      "id": "solo",
+      "chunk": 39,
+      "cefr": "B2",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "b195614a128502e66c5823357b6006a40612fa508ccff7bf80a7881649415823"
+    },
+    {
+      "id": "interest",
+      "chunk": 11,
+      "cefr": "A2",
+      "topic": "thinking",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "kinship",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "d2186a192ad6deff428e1a7f1655cde355fbe82f88c333cf921090ddb16fae1b"
+    },
+    {
+      "id": "slang",
+      "chunk": 48,
+      "cefr": "B2",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "kinship",
+        "grammar_tip"
+      ],
+      "sourceSha256": "5b08fea3a80596dae54a3dc5969f0d94fd0010b22014a7dc5cac05dd01785de9"
+    },
+    {
+      "id": "infinite",
+      "chunk": 35,
+      "cefr": "B2",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "kinship",
+        "grammar_tip"
+      ],
+      "sourceSha256": "b87f81178aa37419093764740ce2097badbbb33feda7195d3f4d7347d027ee43"
+    },
+    {
+      "id": "fuel",
+      "chunk": 22,
+      "cefr": "B1",
+      "topic": "environment",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "50668daf3bfe8888fca64ff203e8be7c5fde444ff4bf072aa9e63164e9e90221"
+    },
+    {
+      "id": "render",
+      "chunk": 57,
+      "cefr": "C1",
+      "topic": "technology",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "27ae1db8ac0eabbe15bc9b27419f36c17f53af60d3168a4a6b1cabe0565c40c2"
+    },
+    {
+      "id": "rent",
+      "chunk": 11,
+      "cefr": "A2",
+      "topic": "city",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "fc21b7506e5a74f5d124753db2dd890b615d16d45f53aae84f7982533871ddc7"
+    },
+    {
+      "id": "navy",
+      "chunk": 23,
+      "cefr": "B1",
+      "topic": "government",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "kinship",
+        "polysemy"
+      ],
+      "sourceSha256": "1dd543195adfc051a875aca4927ec57a653d6ebfc16b233ab3ac083a50e0d3f3"
+    },
+    {
+      "id": "hatch",
+      "chunk": 49,
+      "cefr": "B2",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "f1b970880e74401057cb0ecc9c2a027b8a5aeda7589f85777ffd33d92ba3d047"
+    },
+    {
+      "id": "relax",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "health",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "244c70606b569a83510953926bc1734a08e6d31c137a4824e26d4c73076e2224"
+    },
+    {
+      "id": "disposition",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "emotion",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "8495c893f43fd384a8ec842155fe5297710bf166675d831dae252f28596e54fb"
+    },
+    {
+      "id": "match",
+      "chunk": 7,
+      "cefr": "A1",
+      "topic": "sport",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "e58fba06c33a2b1c31f6ae431d6243b11ea9ccbb425fddf54977df4630af0c09"
+    },
+    {
+      "id": "television",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "media",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "6840086df37c8a9db964a5eed0f7817c4b72436ca11911c76709b44db4016a5c"
+    },
+    {
+      "id": "surrender",
+      "chunk": 37,
+      "cefr": "B2",
+      "topic": "history",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "5f1f40aacc7a4eb8fa53b218ae230d99c1ae744f0995f7223e5963ab32b5eb42"
+    },
+    {
+      "id": "latin",
+      "chunk": 51,
+      "cefr": "B2",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality",
+        "kinship",
+        "polysemy"
+      ],
+      "sourceSha256": "bd5f62bd31d5cc5f15a02f6bf6741db1b227599264e44870ec0534f842dd0502"
+    },
+    {
+      "id": "network",
+      "chunk": 29,
+      "cefr": "B1",
+      "topic": "technology",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "ec7b5717e78c1de6a88320edb64fb59dbe9fd84ecd9094989ed63a0f3d8c2690"
+    },
+    {
+      "id": "shamble",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality"
+      ],
+      "sourceSha256": "b84887a5a312092bccb44f468c70e4a2fa56999a55dcfc65df5d4379f9b99c2d"
+    },
+    {
+      "id": "simple",
+      "chunk": 8,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality"
+      ],
+      "sourceSha256": "168aacab1aa3e2c5c76b25fe9049b5b73468c9fdfd384802a364d4603dd24716"
+    },
+    {
+      "id": "o-clock",
+      "chunk": 0,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality"
+      ],
+      "sourceSha256": "6df4f528a74f46e547df490be4d6ba897be4ed054e55bacecc9bd82ef0e650ca"
+    },
+    {
+      "id": "cram",
+      "chunk": 57,
+      "cefr": "C1",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "modality"
+      ],
+      "sourceSha256": "3c2c5e6f4f93a2ee43a650612639427b5e0ab3a98bb265debef75aa48e45b605"
+    },
+    {
+      "id": "successive",
+      "chunk": 69,
+      "cefr": "C1",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "quantity"
+      ],
+      "sourceSha256": "d543cd3ac41f6c1d0b569ed0ab7b9261429d56f228416678f8f890ac101f4357"
+    },
+    {
+      "id": "nearly",
+      "chunk": 12,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "quantity"
+      ],
+      "sourceSha256": "a2c6bb8bb538ef8c8215bdb1164aac922ff2150f0f21da21987ad05077790183"
+    },
+    {
+      "id": "asia",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "travel",
+      "selection": "stratified",
+      "tags": [
+        "quantity",
+        "kinship"
+      ],
+      "sourceSha256": "cc376b3b47384b7cf144f84077e36af8e0f263d7a9808821383b64c9dda3bab9"
+    },
+    {
+      "id": "rectification",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "work",
+      "selection": "stratified",
+      "tags": [
+        "long_sentence",
+        "grammar_tip"
+      ],
+      "sourceSha256": "f3058bc6297ddb5be347ad6b24ebfe85ba5dc2ae18cea9496c45c8a2a3f116cc"
+    },
+    {
+      "id": "bosom",
+      "chunk": 72,
+      "cefr": "C2",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "kinship"
+      ],
+      "sourceSha256": "21e1a4a5b2bcd0653d1051ff91d3e4a162494992d18ee7e3dc0cf6a3cee1fe57"
+    },
+    {
+      "id": "mien",
+      "chunk": 72,
+      "cefr": "C2",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition"
+      ],
+      "sourceSha256": "bd03bd503d0b0445ef98bc7eceb9f82181db22abbd8a715d9320ec61b1813542"
+    },
+    {
+      "id": "totally",
+      "chunk": 23,
+      "cefr": "B1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition"
+      ],
+      "sourceSha256": "72c4037c3326a9954bedc72f43b9782f9f3cb42078c78854a58d39b56f1bb585"
+    },
+    {
+      "id": "ampere",
+      "chunk": 67,
+      "cefr": "C1",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "32cf73a427c5e828978d02243f66b3ed6bb64a32d5034caa7bc2ee71a5f0592f"
+    },
+    {
+      "id": "modern",
+      "chunk": 15,
+      "cefr": "A2",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [],
+      "sourceSha256": "f6a4bb532e29c4f0258d976d55b39329c7fabf83c5a0801e94433e444d695874"
+    },
+    {
+      "id": "upstairs",
+      "chunk": 0,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "b5f5c7f4e4d28d2e6079cf65edf3d72de80fe0fe46fe13e977f4c617742d06e3"
+    },
+    {
+      "id": "terminable",
+      "chunk": 70,
+      "cefr": "C2",
+      "topic": "work",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "561d82864b708d8f43199226bc590f238c8c460f55fa2a7fe689823bdaa4a986"
+    },
+    {
+      "id": "novice",
+      "chunk": 33,
+      "cefr": "B2",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "08dd4bcc3cbbded37f0cd499a4397832ebc7e5dc6295c29ad5852a2b460c1a5e"
+    },
+    {
+      "id": "entertain",
+      "chunk": 22,
+      "cefr": "B1",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "kinship",
+        "polysemy"
+      ],
+      "sourceSha256": "926b07953d000407ee922292b90d4b823e42d04b0271cd33649a67b8ee3ed08a"
+    },
+    {
+      "id": "resonance",
+      "chunk": 58,
+      "cefr": "C1",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "polysemy"
+      ],
+      "sourceSha256": "7974435146e586ab1063941f7b6d6786b9cfd9187777e9e4e205fce6ef2b6a41"
+    },
+    {
+      "id": "government",
+      "chunk": 8,
+      "cefr": "A2",
+      "topic": "government",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "fe9ad7a1ae5022f7d5dbc68f43c257d05cb698bb072e19d6da10f2593cea519f"
+    },
+    {
+      "id": "behalf",
+      "chunk": 38,
+      "cefr": "B2",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "kinship"
+      ],
+      "sourceSha256": "612bb0a267ed3f2f6f08c9d5ad6320dd7a255102bfda96334afd154884cf39e5"
+    },
+    {
+      "id": "baby-sitter",
+      "chunk": 31,
+      "cefr": "B1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "a3ee76bb401478f1fbea8bd3bd5f55552ffe146c91a01f78f041acde89bcd0b3"
+    },
+    {
+      "id": "children",
+      "chunk": 2,
+      "cefr": "A1",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "dc4485b8da23af06747b84088aae71f0b6144ef7984f2dbd966bd9200620bfc2"
+    },
+    {
+      "id": "profuse",
+      "chunk": 70,
+      "cefr": "C2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "ff237632f092039c2d78260c7099a877114f80f473c49299ecc1a5c0c6fceb61"
+    },
+    {
+      "id": "rectangular",
+      "chunk": 45,
+      "cefr": "B2",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "08faf989ec282579aaf797d4b02969cb76d1a31d209668371eaf8df4a0352f35"
+    },
+    {
+      "id": "stripes",
+      "chunk": 28,
+      "cefr": "B1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "f4ab9f23e875682eaf11bd88c61abe6cb598e9d3c1d96373ba8a060b13e410fb"
+    },
+    {
+      "id": "closed",
+      "chunk": 17,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "polysemy"
+      ],
+      "sourceSha256": "4fb7f1ca5175f265fbd822a76158933436a35a58195ed3eee783bc8e5a47e1df"
+    },
+    {
+      "id": "aesthetic",
+      "chunk": 68,
+      "cefr": "C1",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "809663079af0b05a57081c06ff57202f283ab30adfb1ddf78e0ceb16e429a5c0"
+    },
+    {
+      "id": "cola",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "a09c04356bf7390d8db98c7696ac9cdce18cd610430a78eaa1572d72fd013cc5"
+    },
+    {
+      "id": "vex",
+      "chunk": 70,
+      "cefr": "C2",
+      "topic": "emotion",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "1f56f69b44bd2af97c7248bc08320e3e3d6c12e879aa40b1d960581fcd69550e"
+    },
+    {
+      "id": "rap",
+      "chunk": 40,
+      "cefr": "B2",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "kinship",
+        "polysemy"
+      ],
+      "sourceSha256": "607237fe49ee1dce1e945b33ced78e5314665c54f31ebdb8beab3b5df1688fd9"
+    },
+    {
+      "id": "deer",
+      "chunk": 32,
+      "cefr": "B1",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "2761d4df3d2bfa26980f366e34c2b0a023691d056c150678883535290f4f4975"
+    },
+    {
+      "id": "irony",
+      "chunk": 60,
+      "cefr": "C1",
+      "topic": "arts",
+      "selection": "stratified",
+      "tags": [],
+      "sourceSha256": "4e52d770083541d532b17e3e01e1ff171ac049c15586174340dc9f9a037073e3"
+    },
+    {
+      "id": "housewife",
+      "chunk": 11,
+      "cefr": "A2",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "5a2f141b0452bf649bb7ec125939b06a141b7d79988c54f1a7444b329f97a5d0"
+    },
+    {
+      "id": "make",
+      "chunk": 2,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "b422572325455abae33b65741f093fd60ecb38e2aed71b3116ca276fecd6ddc3"
+    },
+    {
+      "id": "murmur",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "polysemy"
+      ],
+      "sourceSha256": "1651c08fb06b52ffd59afe5402e08bdf023aa237fdeafa80dd3c683e4180893b"
+    },
+    {
+      "id": "trail",
+      "chunk": 44,
+      "cefr": "B2",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy",
+        "grammar_tip"
+      ],
+      "sourceSha256": "77d3b35cbd17fa2af4b593d8a289c118ff0042664cfb59e3100dded77226de02"
+    },
+    {
+      "id": "pony",
+      "chunk": 20,
+      "cefr": "B1",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "c552c2f976cdd7a9b19aabdb13b12404757fed5576fc5bb0d7a4a461db55bfa0"
+    },
+    {
+      "id": "humiliate",
+      "chunk": 58,
+      "cefr": "C1",
+      "topic": "emotion",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "bef199bd7624332cfe0f9bf5ef519a8f348308ab0bc1b741a526e6f067141d0a"
+    },
+    {
+      "id": "vary",
+      "chunk": 48,
+      "cefr": "B2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "b987d82a99fc870f5a741620b672669820d3b876e78c8a67d20c996da3d08f60"
+    },
+    {
+      "id": "horrible",
+      "chunk": 15,
+      "cefr": "A2",
+      "topic": "emotion",
+      "selection": "stratified",
+      "tags": [],
+      "sourceSha256": "20f756ef46a9b81c9268430f10a37549fd8a3ff063a5ca12a9009735d3e5c5aa"
+    },
+    {
+      "id": "process",
+      "chunk": 29,
+      "cefr": "B1",
+      "topic": "work",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "416d20c88b5c0ca7ebe5014d51e8e4eaebe3213a04043dd3aa3583d91f387307"
+    },
+    {
+      "id": "sofa",
+      "chunk": 3,
+      "cefr": "A1",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "a5ff669629ff32b93b206e7abb789ae35cc049eb6b4efc1c7e090481a2fa847c"
+    },
+    {
+      "id": "antecedent",
+      "chunk": 71,
+      "cefr": "C2",
+      "topic": "history",
+      "selection": "stratified",
+      "tags": [
+        "polysemy"
+      ],
+      "sourceSha256": "aa108291068382cd9f1035727b414f24009df54c0d7e372797117e206ee0091d"
+    },
+    {
+      "id": "automobile",
+      "chunk": 51,
+      "cefr": "B2",
+      "topic": "travel",
+      "selection": "stratified",
+      "tags": [
+        "kinship"
+      ],
+      "sourceSha256": "08df81b732c38527fe5b35ea8e393620af6ca26b371ccdc69fc115586110a23d"
+    },
+    {
+      "id": "emergency",
+      "chunk": 27,
+      "cefr": "B1",
+      "topic": "society",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "226c2da96eb50ed10117c12870fe9e1be063c2f498e817fe6cb1b796bd803924"
+    },
+    {
+      "id": "salvage",
+      "chunk": 65,
+      "cefr": "C1",
+      "topic": "environment",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "polysemy"
+      ],
+      "sourceSha256": "65e0b1362bfb2e904d0431abcffdf468a6032a07a6ef9d67915d894ec88678b4"
+    },
+    {
+      "id": "armchair",
+      "chunk": 9,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "6f94f992259c41980b423ad95289545e9d25cd6a70703753a43ea976c4dec47c"
+    },
+    {
+      "id": "winter",
+      "chunk": 0,
+      "cefr": "A1",
+      "topic": "nature",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "26d9214702ec64e3ecf60f29239c0b2ac543aa7218d3a67a116dbab73d7a1263"
+    },
+    {
+      "id": "glycerin",
+      "chunk": 72,
+      "cefr": "C2",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "f4615d5ed01cc18a901d6f086adeae7e88b4a4907fbb2d6e62c91056972d4bdf"
+    },
+    {
+      "id": "flaw",
+      "chunk": 48,
+      "cefr": "B2",
+      "topic": "thinking",
+      "selection": "stratified",
+      "tags": [
+        "grammar_tip"
+      ],
+      "sourceSha256": "1720d7a349cd2d4cb2bdeba5a75052ec1d447d3126dce3e9ca2604a3aacbf7a3"
+    },
+    {
+      "id": "adverb",
+      "chunk": 32,
+      "cefr": "B1",
+      "topic": "education",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "591c33722d4e41f2147f4e8b75feaa3ff72339aae802b148acb67bd9813391be"
+    },
+    {
+      "id": "cultivate",
+      "chunk": 64,
+      "cefr": "C1",
+      "topic": "environment",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "bf0030c029daf9d59a4c010ebbf2e2d32678a686558181b5290d944835f7b454"
+    },
+    {
+      "id": "spaghetti",
+      "chunk": 9,
+      "cefr": "A2",
+      "topic": "daily",
+      "selection": "stratified",
+      "tags": [
+        "modality",
+        "grammar_tip"
+      ],
+      "sourceSha256": "c221e6fb488e526a8d6b2b5aea3fc581d9dad7384c3872db973ae24e1594bfb1"
+    },
+    {
+      "id": "zero",
+      "chunk": 5,
+      "cefr": "A1",
+      "topic": "science",
+      "selection": "stratified",
+      "tags": [],
+      "sourceSha256": "cac7d43bfd74b7a7f5adcf238e14f637e6a07f29605b86796803109dea64fa43"
+    },
+    {
+      "id": "splint",
+      "chunk": 70,
+      "cefr": "C2",
+      "topic": "health",
+      "selection": "stratified",
+      "tags": [
+        "modality"
+      ],
+      "sourceSha256": "5008db8bf9c72c5fa5691182b650bc61ef4e62119cbab00b82a20cc8d629c964"
+    },
+    {
+      "id": "probable",
+      "chunk": 50,
+      "cefr": "B2",
+      "topic": "thinking",
+      "selection": "stratified",
+      "tags": [],
+      "sourceSha256": "a96336ec49ed6cb9f50a0ba0adefd16b417441ac2da280493d47c9073d632220"
+    },
+    {
+      "id": "frightening",
+      "chunk": 22,
+      "cefr": "B1",
+      "topic": "emotion",
+      "selection": "stratified",
+      "tags": [
+        "negation_or_condition",
+        "modality"
+      ],
+      "sourceSha256": "0e7cb08b74b488b83dc4a826fed4f0a77ea34c0bea6a774bd71554aea71e6fed"
+    }
+  ]
+}

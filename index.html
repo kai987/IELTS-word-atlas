@@ -25,6 +25,9 @@
           var s = JSON.parse(localStorage.getItem("word-atlas:settings") || "{}");
           if (s.theme) t = s.theme;
         } catch (e) {}
+        try {
+          document.documentElement.lang = localStorage.getItem("word-atlas:language") === "ja" ? "ja" : "zh-CN";
+        } catch (e) {}
         if (t !== "system") document.documentElement.setAttribute("data-theme", t);
       })();
     </script>

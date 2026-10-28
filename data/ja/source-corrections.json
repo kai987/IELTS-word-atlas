@@ -1,0 +1,33 @@
+[
+  {
+    "id": "gram",
+    "field": "tip",
+    "originalChinese": "符号为g；复数为grams；一千克等于一千克中的一千克？",
+    "correctedChinese": "符号为g；复数为grams；1千克等于1000克。",
+    "englishEvidence": "A unit of mass equal to one thousandth of a kilogram.",
+    "reason": "Repair a corrupt Chinese-only unit statement using the entry English definition; preserve g and grams.",
+    "changedSources": [
+      "public/atlas/entries/11.json",
+      "data/word-atlas.json",
+      "data/word-atlas.csv"
+    ],
+    "date": "2026-10-26",
+    "inFrozenQuantizationSample": false
+  },
+  {
+    "id": "transport",
+    "field": "tip",
+    "originalChinese": "上列为名词音标；动词重音后移，英/t/前为/n/。",
+    "correctedChinese": "上列为名词音标；动词重音后移。",
+    "evidence": "The source noun IPA and Cambridge noun/verb pronunciation differ by stress; the added /t/ and /n/ clause has no coherent phonetic meaning.",
+    "reference": "https://dictionary.cambridge.org/pronunciation/english/transport",
+    "reason": "Remove the corrupt Chinese-only sound clause while preserving noun/verb stress guidance.",
+    "changedSources": [
+      "public/atlas/entries/14.json",
+      "data/word-atlas.json",
+      "data/word-atlas.csv"
+    ],
+    "date": "2026-10-26",
+    "inFrozenQuantizationSample": false
+  }
+]

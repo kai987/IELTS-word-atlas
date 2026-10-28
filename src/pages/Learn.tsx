@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { ArrowRight, Check, Lightbulb, RotateCcw, Share2, Volume2, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { prefetch, useAtlas, useEntry } from "../atlas/context";
@@ -55,6 +56,7 @@ export function Learn() {
 }
 
 function Runner({ session }: { session: ActiveSession }) {
+  const { t } = useI18n();
   const step = session.steps[session.index];
   const total = session.steps.length;
   const exit = () => {
@@ -64,7 +66,7 @@ function Runner({ session }: { session: ActiveSession }) {
   return (
     <div className="learn">
       <header className="learn-top">
-        <button className="icon-btn" onClick={exit} aria-label="暂停并返回">
+        <button className="icon-btn" onClick={exit} aria-label={t("暂停并返回", "中断して戻る")}>
           <X size={22} />
         </button>
         <div className="learn-progress" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}>
@@ -89,6 +91,7 @@ function useStepTimer() {
 }
 
 function Intro({ step }: { step: Step }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const { entry } = useEntry(step.id);
   const settings = useStore((s) => s.settings);
@@ -106,29 +109,30 @@ function Intro({ step }: { step: Step }) {
   return (
     <div className="intro">
       <p className="stage-label">
-        <span className="dot dot-new" /> 初次见面
+        <span className="dot dot-new" /> {t("初次见面", "はじめての単語")}
       </p>
       <EntryView entry={entry} mode="intro" />
       <footer className="learn-actions">
         <button className="btn btn-primary btn-xl" onClick={next} autoFocus>
-          认识了 <ArrowRight size={20} />
+          {t("认识了", "覚えた")} <ArrowRight size={20} />
         </button>
         <span className="hint-keys">
-          <kbd>Enter</kbd> 继续
+          <kbd>Enter</kbd> {t("继续", "続ける")}
         </span>
       </footer>
     </div>
   );
 }
 
-const KIND_LABEL: Record<QuizKind, string> = {
-  meaning: "它是什么意思？",
-  picture: "看图，补全这句话",
-  listen: "听，是哪个词？",
-  spell: "拼出这个词",
-};
 
 function Quiz({ step, session }: { step: Step & { kind: QuizKind }; session: ActiveSession }) {
+  const { t, language } = useI18n();
+  const KIND_LABEL: Record<QuizKind, string> = {
+    meaning: t("它是什么意思？", "この単語の意味は？"),
+    picture: t("看图，补全这句话", "絵を見て、文を完成させましょう"),
+    listen: t("听，是哪个词？", "聞こえた単語は？"),
+    spell: t("拼出这个词", "この単語のスペルを入力しましょう"),
+  };
   const atlas = useAtlas();
   const ref = atlas.byId.get(step.id)!;
   const { entry } = useEntry(step.id);
@@ -179,7 +183,7 @@ function Quiz({ step, session }: { step: Step & { kind: QuizKind }; session: Act
     <div className={`quiz quiz-${step.kind} ${pending ? (pending.correct ? "is-right" : "is-wrong") : ""}`}>
       <p className="stage-label">
         <span className={`dot ${step.retry ? "dot-retry" : "dot-review"}`} />
-        {step.retry ? "再见一面 · " : ""}
+        {step.retry ? t("再见一面 · ", "もう一度 · ") : ""}
         {KIND_LABEL[step.kind]}
       </p>
 
@@ -211,12 +215,12 @@ function Quiz({ step, session }: { step: Step & { kind: QuizKind }; session: Act
         )}
         {step.kind === "listen" && (
           <div className="prompt-listen">
-            <button className="listen-orb" onClick={() => play(atlas.audio(entry, settings.accent), entry.w, settings.accent)} aria-label="再听一遍">
+            <button className="listen-orb" onClick={() => play(atlas.audio(entry, settings.accent), entry.w, settings.accent)} aria-label={t("再听一遍", "もう一度聞く")}>
               <Volume2 size={40} strokeWidth={1.6} />
               <span />
             </button>
             <button className="link" onClick={() => play(atlas.audio(entry, settings.accent), entry.w, settings.accent, 0.7)}>
-              慢速再听
+              {t("慢速再听", "ゆっくり聞く")}
             </button>
           </div>
         )}
@@ -235,7 +239,7 @@ function Quiz({ step, session }: { step: Step & { kind: QuizKind }; session: Act
               <li key={o.id}>
                 <button className={`option ${cls}`} data-option={o.id} onClick={() => submit(o.id, isAnswer)} disabled={!!pending}>
                   <kbd>{i + 1}</kbd>
-                  <span lang={step.kind === "meaning" ? "zh" : "en"}>{step.kind === "meaning" ? o.zh : o.word}</span>
+                  <span lang={step.kind === "meaning" ? (language === "ja" ? "ja" : "zh-CN") : "en"}>{step.kind === "meaning" ? o.zh : o.word}</span>
                   {pending && isAnswer && <Check size={20} className="option-mark" />}
                   {pending && chosen && !isAnswer && <X size={20} className="option-mark" />}
                 </button>
@@ -251,6 +255,7 @@ function Quiz({ step, session }: { step: Step & { kind: QuizKind }; session: Act
 }
 
 function SpellPrompt({ entry, refw, hints }: { entry: Entry; refw: WordRef; hints: number }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const accent = useStore((s) => s.settings.accent);
   const sentence = entry.ex[0] ? gap(entry.ex[0].en, entry.w) : null;
@@ -269,13 +274,14 @@ function SpellPrompt({ entry, refw, hints }: { entry: Entry; refw: WordRef; hint
             {sentence.after}
           </p>
         )}
-        <Speak url={atlas.audio(entry, accent)} text={entry.w} accent={accent} size="sm" label="听发音" />
+        <Speak url={atlas.audio(entry, accent)} text={entry.w} accent={accent} size="sm" label={t("听发音", "発音を聞く")} />
       </div>
     </div>
   );
 }
 
 function SpellInput({ entry, pending, hints, onHint, onSubmit }: { entry: Entry; pending?: { correct: boolean; value: string }; hints: number; onHint: () => void; onSubmit: (v: string) => void }) {
+  const { t } = useI18n();
   const [value, setValue] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const target = entry.w;
@@ -315,16 +321,16 @@ function SpellInput({ entry, pending, hints, onHint, onSubmit }: { entry: Entry;
         autoComplete="off"
         spellCheck={false}
         enterKeyHint="done"
-        aria-label={`拼写，${target.length} 个字符`}
+        aria-label={t(`拼写，${target.length} 个字符`, `スペル入力、${target.length}文字`)}
         readOnly={!!pending}
       />
       {!pending && (
         <div className="spell-actions">
           <button type="button" className="btn btn-ghost" onClick={onHint} disabled={hints >= target.length - 1}>
-            <Lightbulb size={17} /> 提示字母
+            <Lightbulb size={17} /> {t("提示字母", "文字のヒント")}
           </button>
           <button type="submit" className="btn btn-primary" disabled={!value.trim()}>
-            确认 <kbd>Enter</kbd>
+            {t("确认", "確定")} <kbd>Enter</kbd>
           </button>
         </div>
       )}
@@ -333,6 +339,7 @@ function SpellInput({ entry, pending, hints, onHint, onSubmit }: { entry: Entry;
 }
 
 function Feedback({ entry, refw, correct, onNext }: { entry: Entry; refw: WordRef; correct: boolean; onNext: () => void }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const btn = useRef<HTMLButtonElement>(null);
   useEffect(() => btn.current?.focus({ preventScroll: true }), []);
@@ -341,7 +348,7 @@ function Feedback({ entry, refw, correct, onNext }: { entry: Entry; refw: WordRe
       <div className="feedback-inner">
         <Illustration src={atlas.img(entry, "thumb")} word={entry.w} topic={refw.topic} className="feedback-art" />
         <div className="feedback-text">
-          <p className="feedback-verdict">{correct ? "答对了" : "没关系，记住它"}</p>
+          <p className="feedback-verdict">{correct ? t("答对了", "正解です") : t("没关系，记住它", "大丈夫、ここで覚えましょう")}</p>
           <p className="feedback-word">
             <b lang="en">{entry.w}</b>
             <span className="ipa">{entry.uk || entry.us}</span>
@@ -359,7 +366,7 @@ function Feedback({ entry, refw, correct, onNext }: { entry: Entry; refw: WordRe
           )}
         </div>
         <button ref={btn} className={`btn btn-xl ${correct ? "btn-sage" : "btn-terra"}`} onClick={onNext}>
-          继续 <ArrowRight size={20} />
+          {t("继续", "続ける")} <ArrowRight size={20} />
         </button>
       </div>
     </div>
@@ -367,6 +374,7 @@ function Feedback({ entry, refw, correct, onNext }: { entry: Entry; refw: WordRe
 }
 
 function Summary({ session }: { session: ActiveSession }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   useEffect(() => {
     if (store.get().settings.sfx) void cue("complete");
@@ -388,29 +396,29 @@ function Summary({ session }: { session: ActiveSession }) {
       <div className="summary-card">
         <div className="summary-sky">
           <Galaxy mode="mini" highlight={words.map((w) => w.id)} ignite />
-          <p>今天点亮了 {words.length} 颗星</p>
+          <p>{t(`今天点亮了 ${words.length} 颗星`, `今日は${words.length}個の星を灯しました`)}</p>
         </div>
-        <p className="eyebrow">这一程结束了</p>
-        <h1 className="display">{stats.accuracy >= 90 ? "漂亮的一程。" : stats.accuracy >= 60 ? "稳稳向前。" : "错过的，会再相遇。"}</h1>
+        <p className="eyebrow">{t("这一程结束了", "今回の学習が終わりました")}</p>
+        <h1 className="display">{stats.accuracy >= 90 ? t("漂亮的一程。", "すばらしい学習でした。") : stats.accuracy >= 60 ? t("稳稳向前。", "着実に前へ。") : t("错过的，会再相遇。", "間違えた単語には、また出会えます。")}</h1>
         <div className="summary-stats">
           <Ring value={stats.accuracy / 100} size={128} tone={stats.accuracy >= 60 ? "sage" : "terra"}>
             <b>{stats.accuracy}%</b>
-            <small>首次正确</small>
+            <small>{t("首次正确", "初回正答率")}</small>
           </Ring>
           <dl>
             <div>
-              <dt>新词</dt>
+              <dt>{t("新词", "新しい単語")}</dt>
               <dd>{session.newIds.length}</dd>
             </div>
             <div>
-              <dt>复习</dt>
+              <dt>{t("复习", "復習")}</dt>
               <dd>{session.reviewIds.length}</dd>
             </div>
             <div>
-              <dt>用时</dt>
+              <dt>{t("用时", "所要時間")}</dt>
               <dd>
                 {minutes}
-                <small>分钟</small>
+                <small>{t("分钟", "分")}</small>
               </dd>
             </div>
           </dl>
@@ -424,18 +432,18 @@ function Summary({ session }: { session: ActiveSession }) {
             </li>
           ))}
         </ul>
-        <p className="summary-note">FSRS 已为每个词排好下次相遇的时间。答错的词，会更早回来。</p>
+        <p className="summary-note">{t("FSRS 已为每个词排好下次相遇的时间。答错的词，会更早回来。", "FSRSが各単語の次の復習時期を設定しました。間違えた単語は、早めにもう一度登場します。")}</p>
         <div className="summary-actions">
           {wrong.length > 0 && (
             <button className="btn btn-ghost" onClick={again}>
-              <RotateCcw size={18} /> 再练 {wrong.length} 个错词
+              <RotateCcw size={18} /> {t(`再练 ${wrong.length} 个错词`, `間違えた${wrong.length}語を復習`)}
             </button>
           )}
           <button className="btn btn-ghost" onClick={() => shareSession(atlas, session)}>
-            <Share2 size={18} /> 分享成绩卡
+            <Share2 size={18} /> {t("分享成绩卡", "学習結果をシェア")}
           </button>
           <button className="btn btn-primary btn-xl" onClick={done} ref={(b) => b?.focus({ preventScroll: true })}>
-            完成 <ArrowRight size={20} />
+            {t("完成", "完了")} <ArrowRight size={20} />
           </button>
         </div>
       </div>

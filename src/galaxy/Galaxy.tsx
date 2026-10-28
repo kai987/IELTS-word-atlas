@@ -1,3 +1,4 @@
+import { getLanguage, useI18n } from "../i18n";
 import { Crosshair, Minus, Plus, RotateCcw, Share2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAtlas } from "../atlas/context";
@@ -55,6 +56,7 @@ export function Galaxy({
   /** Fly to this word once ready. */
   focus?: string | null;
 }) {
+  const { t, language } = useI18n();
   const atlas = useAtlas();
   const layout = useGalaxyLayout();
   const cards = useStore((s) => s.progress.cards);
@@ -138,7 +140,7 @@ export function Galaxy({
         if (sfx && k < 12) void cue("ignite");
       }, 1400 + k * 180),
     );
-    const voice = window.setTimeout(() => sfx && void playFile("voice-galaxy-lit.mp3", 0.9), 1600 + ids.length * 180);
+    const voice = window.setTimeout(() => sfx && getLanguage() === "zh" && void playFile("voice-galaxy-lit.mp3", 0.9), 1600 + ids.length * 180);
     return () => {
       timers.forEach(clearTimeout);
       clearTimeout(voice);
@@ -156,16 +158,16 @@ export function Galaxy({
 
   // First visit to the full galaxy: one quiet sentence explaining what it is.
   useEffect(() => {
-    if (mode !== "full") return;
+    if (mode !== "full" || language !== "zh") return;
     try {
       if (localStorage.getItem("word-atlas:galaxy-hello")) return;
       localStorage.setItem("word-atlas:galaxy-hello", "1");
     } catch {
       return;
     }
-    const t = window.setTimeout(() => store.get().settings.sfx && void playFile("voice-galaxy-hello.mp3", 0.9), 900);
+    const t = window.setTimeout(() => store.get().settings.sfx && getLanguage() === "zh" && void playFile("voice-galaxy-hello.mp3", 0.9), 900);
     return () => clearTimeout(t);
-  }, [mode]);
+  }, [mode, language]);
 
   /* ---------- interaction (full mode) ---------- */
   const drag = useRef<{ x: number; y: number; moved: number; pinch?: number } | null>(null);
@@ -269,6 +271,7 @@ export function Galaxy({
     return () => cv.removeEventListener("wheel", stop);
   }, [mode]);
 
+  const hoverRef = hover ? atlas.byId.get(hover.ref.id) : undefined;
   const lit = useMemo(() => layout.ids.reduce((n, id) => n + (cards[id] ? 1 : 0), 0), [layout, cards]);
 
   if (mode === "mini")
@@ -293,7 +296,7 @@ export function Galaxy({
         }}
         onWheel={onWheel}
         role="img"
-        aria-label={`词汇星图：${layout.n} 颗星，已点亮 ${lit} 颗。可拖动旋转、滚动缩放，点击星星打开词条。`}
+        aria-label={t(`词汇星图：${layout.n} 颗星，已点亮 ${lit} 颗。可拖动旋转、滚动缩放，点击星星打开词条。`, `単語星図：${layout.n} 個の星のうち ${lit} 個が点灯。ドラッグで回転、スクロールで拡大・縮小、星をクリックすると単語を表示します。`)}
         tabIndex={0}
         onKeyDown={(e) => {
           const eng = engine.current;
@@ -313,43 +316,43 @@ export function Galaxy({
           </span>
         ))}
       </div>
-      {hover && (
+      {hover && hoverRef && (
         <button
           className="galaxy-tip"
           style={{ transform: `translate(${Math.min(hover.x + 18, (canvas.current?.clientWidth ?? 0) - 260)}px, ${Math.max(8, hover.y - 46)}px)` }}
-          onClick={() => openWord(hover.ref.id)}
+          onClick={() => openWord(hoverRef.id)}
         >
-          <Illustration src={atlas.img(hover.ref, "thumb")} word={hover.ref.word} topic={hover.ref.topic} />
+          <Illustration src={atlas.img(hoverRef, "thumb")} word={hoverRef.word} topic={hoverRef.topic} />
           <span>
-            <b lang="en">{hover.ref.word}</b>
-            <small>{hover.ref.zh}</small>
+            <b lang="en">{hoverRef.word}</b>
+            <small>{hoverRef.zh}</small>
           </span>
         </button>
       )}
       <div className="galaxy-hud">
         <p>
-          <b>{lit.toLocaleString()}</b> / {layout.n.toLocaleString()} 颗星已点亮
+          <b>{lit.toLocaleString()}</b> / {layout.n.toLocaleString()} {t("颗星已点亮", "個の星が点灯")}
         </p>
         <ul className="galaxy-legend" aria-hidden="true">
           <li>
             <i className="lg-dust" />
-            未学
+            {t("未学", "未学習")}
           </li>
           <li>
             <i className="lg-learning" />
-            学习中
+            {t("学习中", "学習中")}
           </li>
           <li>
             <i className="lg-mastered" />
-            已掌握
+            {t("已掌握", "習得済み")}
           </li>
         </ul>
       </div>
       <div className="galaxy-controls">
-        <button className="icon-btn" onClick={() => engine.current && (engine.current.cam.dist = clampDist(engine.current.cam.dist * 0.8))} aria-label="放大">
+        <button className="icon-btn" onClick={() => engine.current && (engine.current.cam.dist = clampDist(engine.current.cam.dist * 0.8))} aria-label={t("放大", "拡大")}>
           <Plus size={18} />
         </button>
-        <button className="icon-btn" onClick={() => engine.current && (engine.current.cam.dist = clampDist(engine.current.cam.dist * 1.25))} aria-label="缩小">
+        <button className="icon-btn" onClick={() => engine.current && (engine.current.cam.dist = clampDist(engine.current.cam.dist * 1.25))} aria-label={t("缩小", "縮小")}>
           <Minus size={18} />
         </button>
         <button
@@ -359,7 +362,7 @@ export function Galaxy({
             engine.current?.replayIntro();
             if (store.get().settings.sfx) void cue("fly");
           }}
-          aria-label="回到全景"
+          aria-label={t("回到全景", "全体表示に戻る")}
         >
           <RotateCcw size={17} />
         </button>
@@ -374,15 +377,15 @@ export function Galaxy({
               if (store.get().settings.sfx) void cue("fly");
             }
           }}
-          aria-label="飞到一颗已点亮的星"
+          aria-label={t("飞到一颗已点亮的星", "点灯した星へ移動")}
         >
           <Crosshair size={17} />
         </button>
-        <button className="icon-btn" onClick={() => canvas.current && shareGalaxy(canvas.current, lit, layout.n)} aria-label="分享我的星图">
+        <button className="icon-btn" onClick={() => canvas.current && shareGalaxy(canvas.current, lit, layout.n)} aria-label={t("分享我的星图", "自分の星図を共有")}>
           <Share2 size={17} />
         </button>
       </div>
-      <p className="galaxy-hint">拖动旋转 · 滚动缩放 · 点击星星打开词条</p>
+      <p className="galaxy-hint">{t("拖动旋转 · 滚动缩放 · 点击星星打开词条", "ドラッグで回転 · スクロールで拡大・縮小 · 星をクリックして単語を表示")}</p>
     </div>
   );
 }

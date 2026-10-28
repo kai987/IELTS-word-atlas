@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "kind": "controlled-probes",
+  "entries": [
+    {
+      "id": "probe-negation-clean",
+      "word": "lock",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The door is not locked.",
+          "currentJapanese": "ドアには鍵がかかっていません。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-negation-mutated",
+      "word": "lock",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The door is not locked.",
+          "currentJapanese": "ドアには鍵がかかっています。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-permission-clean",
+      "word": "leave",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "Members can leave early.",
+          "currentJapanese": "会員は早めに退出できます。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-permission-mutated",
+      "word": "leave",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "Members can leave early.",
+          "currentJapanese": "会員は早めに退出しなければなりません。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-deadline-clean",
+      "word": "submit",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "Submit the form by Friday.",
+          "currentJapanese": "金曜日までに用紙を提出してください。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-deadline-mutated",
+      "word": "submit",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "Submit the form by Friday.",
+          "currentJapanese": "金曜日の後に用紙を提出してください。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-unspecified-time-clean",
+      "word": "depart",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The train leaves at six.",
+          "currentJapanese": "列車は6時に出発します。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-unspecified-time-mutated",
+      "word": "depart",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The train leaves at six.",
+          "currentJapanese": "列車は午前6時に出発します。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-quantity-clean",
+      "word": "ticket",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "She bought three tickets.",
+          "currentJapanese": "彼女は切符を3枚買いました。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-quantity-mutated",
+      "word": "ticket",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "She bought three tickets.",
+          "currentJapanese": "彼女は切符を4枚買いました。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-exclusive-boundary-clean",
+      "word": "value",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The value must stay below zero.",
+          "currentJapanese": "値は0未満でなければなりません。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-exclusive-boundary-mutated",
+      "word": "value",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The value must stay below zero.",
+          "currentJapanese": "値は0以下でなければなりません。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-sibling-age-clean",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "I called my sister.",
+          "currentJapanese": "姉（または妹）に電話しました。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-sibling-age-mutated",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "I called my sister.",
+          "currentJapanese": "姉に電話しました。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-sibling-gender-clean",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a female sibling",
+          "currentJapanese": "女性のきょうだい",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-sibling-gender-mutated",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a female sibling",
+          "currentJapanese": "男性のきょうだい",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-religious-sense-clean",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a woman belonging to a religious community",
+          "currentJapanese": "宗教共同体に属する女性",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-religious-sense-mutated",
+      "word": "sister",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a woman belonging to a religious community",
+          "currentJapanese": "家族内の女性のきょうだい",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-material-purification-clean",
+      "word": "refinement",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "the removal of unwanted substances from a material",
+          "currentJapanese": "材料から不要な物質を取り除く精製",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-material-purification-mutated",
+      "word": "refinement",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "the removal of unwanted substances from a material",
+          "currentJapanese": "文章や振る舞いを上品に整える洗練",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-chinese-grammar-ban-clean",
+      "word": "must",
+      "fields": [
+        {
+          "path": "tip",
+          "sourceLanguage": "zh-Hans",
+          "sourceText": "禁止把must not译成“没有必要”；must not表示禁止。",
+          "currentJapanese": "must notを「必要がない」と訳してはいけません。must notは禁止を表します。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-chinese-grammar-ban-mutated",
+      "word": "must",
+      "fields": [
+        {
+          "path": "tip",
+          "sourceLanguage": "zh-Hans",
+          "sourceText": "禁止把must not译成“没有必要”；must not表示禁止。",
+          "currentJapanese": "must notを「必要がない」と訳してもかまいません。must notは禁止を表します。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-quoted-english-clean",
+      "word": "library",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a place where people can read or borrow books",
+          "currentJapanese": "図書館",
+          "mode": "translate"
+        },
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The library sign says 'Open'.",
+          "currentJapanese": "図書館の看板には「Open」と書かれています。",
+          "mode": "translate"
+        }
+      ]
+    },
+    {
+      "id": "probe-quoted-english-mutated",
+      "word": "library",
+      "fields": [
+        {
+          "path": "senses.0",
+          "sourceLanguage": "en",
+          "sourceText": "a place where people can read or borrow books",
+          "currentJapanese": "図書館",
+          "mode": "translate"
+        },
+        {
+          "path": "ex.0",
+          "sourceLanguage": "en",
+          "sourceText": "The library sign says 'Open'.",
+          "currentJapanese": "図書館の看板には「Closed」と書かれています。",
+          "mode": "translate"
+        }
+      ]
+    }
+  ],
+  "gold": [
+    {
+      "entryId": "probe-negation-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-negation-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "negation_or_modality"
+      ],
+      "severity": "critical",
+      "note": "Negation is reversed: not locked becomes locked."
+    },
+    {
+      "entryId": "probe-permission-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-permission-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "negation_or_modality"
+      ],
+      "severity": "critical",
+      "note": "Permission is changed into an obligation."
+    },
+    {
+      "entryId": "probe-deadline-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-deadline-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "quantity_time_or_entity"
+      ],
+      "severity": "critical",
+      "note": "A Friday deadline is changed into submission after Friday."
+    },
+    {
+      "entryId": "probe-unspecified-time-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-unspecified-time-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "quantity_time_or_entity"
+      ],
+      "severity": "major",
+      "note": "The source gives no a.m. or p.m.; the mutation invents morning."
+    },
+    {
+      "entryId": "probe-quantity-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-quantity-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "quantity_time_or_entity"
+      ],
+      "severity": "critical",
+      "note": "Three tickets are changed to four tickets."
+    },
+    {
+      "entryId": "probe-exclusive-boundary-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-exclusive-boundary-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "quantity_time_or_entity"
+      ],
+      "severity": "critical",
+      "note": "The strict boundary below zero is changed to zero or below."
+    },
+    {
+      "entryId": "probe-sibling-age-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-sibling-age-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "quantity_time_or_entity"
+      ],
+      "severity": "major",
+      "note": "The source does not specify whether the sister is older; the mutation does."
+    },
+    {
+      "entryId": "probe-sibling-gender-clean",
+      "path": "senses.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-sibling-gender-mutated",
+      "path": "senses.0",
+      "expectedStatus": "error",
+      "categories": [
+        "wrong_meaning"
+      ],
+      "severity": "critical",
+      "note": "The female sibling is changed to a male sibling."
+    },
+    {
+      "entryId": "probe-religious-sense-clean",
+      "path": "senses.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-religious-sense-mutated",
+      "path": "senses.0",
+      "expectedStatus": "error",
+      "categories": [
+        "wrong_meaning"
+      ],
+      "severity": "major",
+      "note": "Religious-community membership is replaced with a family relationship."
+    },
+    {
+      "entryId": "probe-material-purification-clean",
+      "path": "senses.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-material-purification-mutated",
+      "path": "senses.0",
+      "expectedStatus": "error",
+      "categories": [
+        "wrong_meaning"
+      ],
+      "severity": "major",
+      "note": "Material purification is replaced with stylistic or social refinement."
+    },
+    {
+      "entryId": "probe-chinese-grammar-ban-clean",
+      "path": "tip",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "critical",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-chinese-grammar-ban-mutated",
+      "path": "tip",
+      "expectedStatus": "error",
+      "categories": [
+        "negation_or_modality"
+      ],
+      "severity": "critical",
+      "note": "The prohibition on a translation is changed into permission; both English literals remain."
+    },
+    {
+      "entryId": "probe-quoted-english-clean",
+      "path": "senses.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "A short all-kanji Japanese dictionary gloss is a valid clean control."
+    },
+    {
+      "entryId": "probe-quoted-english-clean",
+      "path": "ex.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "Clean control: the Japanese preserves the source facts without adding a restriction."
+    },
+    {
+      "entryId": "probe-quoted-english-mutated",
+      "path": "senses.0",
+      "expectedStatus": "pass",
+      "categories": [],
+      "severity": "major",
+      "note": "A short all-kanji Japanese dictionary gloss is a valid clean control."
+    },
+    {
+      "entryId": "probe-quoted-english-mutated",
+      "path": "ex.0",
+      "expectedStatus": "error",
+      "categories": [
+        "wrong_meaning"
+      ],
+      "severity": "major",
+      "note": "Retaining the quoted English Open is valid. Changing it to Closed changes the sign's message."
+    }
+  ],
+  "reviewer": {
+    "name": "Codex semantic_models author; Codex semantic_tests independent source-grounded reviewer",
+    "method": "24 controlled cases / 12 minimal pairs / 26 fields independently checked against authoritative English or Chinese; exact gold coverage verified; synthetic tests only, not natural-corpus accuracy",
+    "independent": true
+  }
+}

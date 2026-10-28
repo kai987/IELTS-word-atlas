@@ -1,3 +1,4 @@
+import { translate } from "../i18n";
 import type { Atlas, Entry, IndexRow, WordRef } from "./types";
 import { MEDIA } from "./types";
 
@@ -18,7 +19,7 @@ interface IndexFile {
 
 export async function loadOpenAtlas(): Promise<Atlas> {
   const res = await fetch(url("index.json"));
-  if (!res.ok) throw new Error(`词库索引加载失败（${res.status}）`);
+  if (!res.ok) throw new Error(translate(`词库索引加载失败（${res.status}）`, `単語データを読み込めませんでした（${res.status}）`));
   const idx = (await res.json()) as IndexFile;
   const words: WordRef[] = idx.words.map((r, order) => ({
     id: r[0],
@@ -39,7 +40,7 @@ export async function loadOpenAtlas(): Promise<Atlas> {
     if (!p) {
       p = fetch(url(`entries/${n}.json`))
         .then((r) => {
-          if (!r.ok) throw new Error(`词条加载失败（${r.status}）`);
+          if (!r.ok) throw new Error(translate(`词条加载失败（${r.status}）`, `単語の詳細を読み込めませんでした（${r.status}）`));
           return r.json() as Promise<Entry[]>;
         })
         .then((list) => list.forEach((e) => cache.set(e.id, e)))
@@ -68,10 +69,10 @@ export async function loadOpenAtlas(): Promise<Atlas> {
       const hit = cache.get(id);
       if (hit) return hit;
       const ref = byId.get(id);
-      if (!ref) throw new Error(`没有找到词条 ${id}`);
+      if (!ref) throw new Error(translate(`没有找到词条 ${id}`, `単語が見つかりません：${id}`));
       await loadChunk(Math.floor(ref.order / idx.chunk));
       const e = cache.get(id);
-      if (!e) throw new Error(`没有找到词条 ${id}`);
+      if (!e) throw new Error(translate(`没有找到词条 ${id}`, `単語が見つかりません：${id}`));
       return e;
     },
     img: (ref, size = "full") =>
@@ -161,7 +162,7 @@ export async function loadPrivateAtlas(open: Atlas | null): Promise<Atlas | null
     peek: (id) => entries.get(id),
     entry: async (id) => {
       const e = entries.get(id);
-      if (!e) throw new Error(`没有找到词条 ${id}`);
+      if (!e) throw new Error(translate(`没有找到词条 ${id}`, `単語が見つかりません：${id}`));
       return e;
     },
     img: (ref) => pick(ref)?.img ?? null,

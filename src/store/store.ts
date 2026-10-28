@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { translate } from "../i18n";
 import type { Accent } from "../atlas/types";
 import type { CardState, Grade } from "./srs";
 
@@ -300,12 +301,12 @@ export function importBackup(text: string): { ok: true; cards: number } | { ok: 
   try {
     data = JSON.parse(text);
   } catch {
-    return { ok: false, error: "文件不是有效的 JSON。" };
+    return { ok: false, error: translate("文件不是有效的 JSON。", "有効なJSONファイルではありません。") };
   }
   if (!isObj(data) || data.app !== "word-atlas" || data.version !== 2 || !isObj(data.progress))
-    return { ok: false, error: "这不是词光的学习备份。" };
+    return { ok: false, error: translate("这不是词光的学习备份。", "詞光の学習バックアップではありません。") };
   const id = state.progress.datasetId;
-  if (data.progress.datasetId !== id) return { ok: false, error: "备份来自另一个词库，请先切换到对应词库。" };
+  if (data.progress.datasetId !== id) return { ok: false, error: translate("备份来自另一个词库，请先切换到对应词库。", "別の単語帳のバックアップです。対応する単語帳に切り替えてください。") };
   const progress = sanitizeProgress({ ...data.progress, session: null }, id);
   state = { ...state, progress, settings: { ...sanitizeSettings(data.settings), onboarded: true } };
   emit();

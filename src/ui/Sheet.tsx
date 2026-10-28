@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 
@@ -17,6 +18,7 @@ export function Sheet({
   wide?: boolean;
   className?: string;
 }) {
+  const { t } = useI18n();
   const panel = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -54,7 +56,7 @@ export function Sheet({
     <div className="sheet-root" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div ref={panel} className={`sheet ${wide ? "sheet-wide" : ""} ${className}`} role="dialog" aria-modal="true" aria-label={label} tabIndex={-1}>
         <span className="sheet-grip" aria-hidden="true" />
-        <button className="icon-btn sheet-close" onClick={onClose} aria-label="关闭">
+        <button className="icon-btn sheet-close" onClick={onClose} aria-label={t("关闭", "閉じる")}>
           <X size={20} />
         </button>
         {children}

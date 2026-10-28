@@ -23,8 +23,9 @@ TOP = {
     "README.md", "README.en.md", "LICENSE", "CONTENT_LICENSE.md", "CONTRIBUTING.md", "SECURITY.md",
     ".gitignore", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts", "index.html",
 }
-SCRIPTS = {"check-atlas.mjs", "render-cards.mjs", "record-demo.mjs", "package_public.py"}
-ATLAS_SCRIPTS = {"common.py", "gen_text.py", "gen_images.py", "gen_brand.py", "gen_word_audio.py", "gen_sentence_audio.py", "gen_sfx.py", "gen_galaxy_audio.sh", "fix_blocked.py", "build_atlas.py", "build_sfx.py"}
+SCRIPTS = {"check-japanese.mjs", "check-atlas.mjs", "render-cards.mjs", "record-demo.mjs", "package_public.py"}
+ATLAS_SCRIPTS = {"test_ja_review.py", "benchmark-ja-review.py", "translate-ja-local-v4.py", "export-ja-quant-blind.py", "evaluate-ja-quant.py", "audit-ja-quant-requests.py", "ja-reviewed-0.json", "ja-reviewed-1.json", "ja-reviewed-2.json", "ja-field-reviewed-0.json", "ja-field-reviewed-1.json", "ja-field-reviewed-2.json", "benchmark-ja-quant.py", "ja-benchmark-100.json", "translate-ja-local.py", "translate_ja.py", "common.py", "gen_text.py", "gen_images.py", "gen_brand.py", "gen_word_audio.py", "gen_sentence_audio.py", "gen_sfx.py", "gen_galaxy_audio.sh", "fix_blocked.py", "build_atlas.py", "build_sfx.py"}
+ATLAS_SCRIPTS |= {"ja_review_core.py", "ja_review_models.py", "review-ja-corpus.py", "calibrate-ja-review.py", "test_ja_semantic_review.py", "ja-semantic-probes.json"}
 TEXT = {".ts", ".tsx", ".css", ".svg", ".md", ".json", ".mjs", ".js", ".py", ".html", ".csv", ".yml", ".webmanifest", ""}
 PATTERNS = {
     "API credential pattern": re.compile(rb"\b(?:sk[_-][A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{25,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[A-Z0-9]{16}|xi-[A-Za-z0-9]{20,})\b"),
@@ -50,19 +51,27 @@ def allowed(rel: Path) -> bool:
     if p[0] == "docs":
         return (len(p) == 2 and rel.suffix == ".md") or (len(p) == 3 and p[1] == "assets" and rel.suffix in {".jpg", ".png", ".gif", ".webp", ".mp4"})
     if p[0] == "data":
+        if len(p) == 3 and p[1] == "ja" and p[2] in {"README.md", "source-corrections.json"}:
+            return True
+        if len(p) == 4 and p[1:3] == ("ja", "entries"):
+            return re.fullmatch(r"\d+\.json", p[3]) is not None
         return len(p) == 2 and p[1] in {"word-atlas.json", "word-atlas.csv", "README.md"}
     if name in {".github/workflows/check.yml", ".github/workflows/pages.yml"}:
         return True
     if p[0] == "public":
         inner = p[1:]
         if len(inner) == 1:
-            return inner[0] in {"favicon.svg", "manifest.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
+            return inner[0] in {"favicon.svg", "manifest.webmanifest", "manifest.ja.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
         if inner[0] == "sfx":
             return len(inner) == 2 and rel.suffix == ".mp3"
         if inner[0] == "brand":
             return len(inner) == 2 and rel.suffix in {".webp", ".jpg"}
         if inner[0] == "atlas":
             sub = inner[1:]
+            if sub == ("ja", "index.json"):
+                return True
+            if len(sub) == 3 and sub[0] == "ja" and sub[1] == "entries":
+                return re.fullmatch(r"\d+\.json", sub[2]) is not None
             if sub == ("index.json",):
                 return True
             if len(sub) == 2 and sub[0] == "entries":

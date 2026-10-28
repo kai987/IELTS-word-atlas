@@ -384,6 +384,105 @@ code {
   color: var(--terra);
 }
 
+/* Language control shares the header's circular tools and paper palette. */
+.language-picker {
+  position: relative;
+  flex: none;
+}
+.language-trigger {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+.language-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 50;
+  min-width: 164px;
+  padding: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r);
+  background: var(--card);
+  box-shadow: var(--shadow-lg);
+}
+.language-menu button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  color: var(--ink-2);
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.language-menu button:hover,
+.language-menu button:focus-visible {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.language-menu button.is-selected {
+  color: var(--ochre);
+  background: var(--ochre-soft);
+}
+.language-initial {
+  font-size: 15px;
+  font-weight: 600;
+}
+.language-check {
+  width: 16px;
+  margin-left: auto;
+  font-size: 13px;
+}
+:root:lang(ja) {
+  --serif:
+    "Fraunces Variable", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP",
+    Georgia, serif;
+  --sans:
+    -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic",
+    "Noto Sans JP", "Segoe UI", sans-serif;
+}
+:lang(ja) .logo-text b,
+:lang(ja) .splash-static {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+}
+@media (min-width: 760px) and (max-width: 1100px) {
+  .topbar .search-pill {
+    min-width: 0;
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+    border: 0;
+    background: none;
+    margin: 0;
+  }
+  .topbar .search-pill span,
+  .topbar .search-pill kbd {
+    display: none;
+  }
+  .topbar .topnav a {
+    padding-inline: 10px;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 390px) {
+  .topbar {
+    gap: 8px;
+  }
+  .topbar-logo {
+    margin-right: 0;
+  }
+  .topbar-tools {
+    gap: 0;
+  }
+  .topbar .logo-text small {
+    display: none;
+  }
+}
+
 /* ---------- chips & segmented ---------- */
 
 .chip {
@@ -4119,4 +4218,30 @@ a:hover .mark-needle,
 }
 .streak-panel .mini-stats div:first-child dd {
   color: var(--ochre);
+}
+
+/* Translated labels may be longer; keep narrow screens within their viewport. */
+.filters,
+.filters-row {
+  min-width: 0;
+}
+.filters-row > .segmented {
+  min-width: 0;
+}
+.about-actions .btn {
+  max-width: 100%;
+  height: auto;
+  min-height: 44px;
+  padding-block: 10px;
+  white-space: normal;
+  text-align: center;
+}
+.greeting-segment {
+  display: inline-block;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  html[lang="ja"] .greet .display {
+    font-size: clamp(24px, 7.8vw, 36px);
+  }
 }

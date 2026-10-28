@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { AudioLines, Check, CloudRain, Coffee, Flame, Sailboat, Sparkles, Trees, VolumeX, Waves } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AMBIENCE, primeCues, setAmbience, type AmbienceId } from "../lib/sound";
@@ -29,6 +30,7 @@ export function AmbienceController() {
 }
 
 export function AmbiencePicker() {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const ambience = useStore((s) => s.settings.ambience);
   const volume = useStore((s) => s.settings.ambienceVolume);
@@ -48,13 +50,13 @@ export function AmbiencePicker() {
   const on = ambience !== "off";
   return (
     <div className="amb" ref={box}>
-      <button className={`icon-btn amb-btn ${on ? "is-on" : ""}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="环境声" title="环境声">
+      <button className={`icon-btn amb-btn ${on ? "is-on" : ""}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={t("环境声", "環境音")} title={t("环境声", "環境音")}>
         <AudioLines size={19} />
         {on && <span className="amb-bars" aria-hidden="true"><i /><i /><i /></span>}
       </button>
       {open && (
-        <div className="amb-pop" role="dialog" aria-label="环境声">
-          <p className="eyebrow">环境声 · 专注陪伴</p>
+        <div className="amb-pop" role="dialog" aria-label={t("环境声", "環境音")}>
+          <p className="eyebrow">{t("环境声 · 专注陪伴", "環境音 · 集中のおともに")}</p>
           <ul>
             {AMBIENCE.map(({ id, label }) => {
               const Icon = ICONS[id];
@@ -63,7 +65,7 @@ export function AmbiencePicker() {
                 <li key={id}>
                   <button className={sel ? "is-on" : ""} onClick={() => store.settings({ ambience: sel ? "off" : id })} aria-pressed={sel}>
                     <Icon size={18} strokeWidth={1.7} />
-                    <span>{label}</span>
+                    <span>{t(label, ({ stars: "星空の音楽", rain: "雨の日の図書館", sea: "早朝の海辺", forest: "朝の森", fire: "夜の暖炉", voyage: "航海中の船室", cafe: "静かなカフェ" } as const)[id])}</span>
                     {sel && <Check size={16} />}
                   </button>
                 </li>
@@ -72,16 +74,16 @@ export function AmbiencePicker() {
             <li>
               <button className={!on ? "is-on" : ""} onClick={() => store.settings({ ambience: "off" })} aria-pressed={!on}>
                 <VolumeX size={18} strokeWidth={1.7} />
-                <span>安静</span>
+                <span>{t("安静", "オフ")}</span>
                 {!on && <Check size={16} />}
               </button>
             </li>
           </ul>
           <label className="amb-vol">
-            <span>音量</span>
+            <span>{t("音量", "音量")}</span>
             <input type="range" min={0} max={1} step={0.05} value={volume} onChange={(e) => store.settings({ ambienceVolume: Number(e.target.value) })} disabled={!on} />
           </label>
-          <p className="amb-note">读单词时会自动压低环境声。</p>
+          <p className="amb-note">{t("读单词时会自动压低环境声。", "単語の読み上げ中は環境音の音量が自動で下がります。")}</p>
         </div>
       )}
     </div>

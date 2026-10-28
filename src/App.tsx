@@ -1,10 +1,31 @@
-import { BookOpen, ChevronLeft, ChevronRight, Compass, Github, Keyboard, Moon, Search, Sun, User } from "lucide-react";
+import {
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  Github,
+  Keyboard,
+  Moon,
+  Search,
+  Sun,
+  User,
+} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { AtlasContext, useAtlas, useEntry } from "./atlas/context";
 import { loadOpenAtlas, loadPrivateAtlas } from "./atlas/data";
+import { loadJapaneseAtlas } from "./atlas/japanese";
+import { useI18n } from "./i18n";
+import { LanguagePicker } from "./i18n/LanguagePicker";
 import type { Atlas } from "./atlas/types";
 import { REPO_URL } from "./config";
-import { closeWord, currentLocation, go, openWord, useLocation, type Route } from "./lib/router";
+import {
+  closeWord,
+  currentLocation,
+  go,
+  openWord,
+  useLocation,
+  type Route,
+} from "./lib/router";
 import { AtlasPage } from "./pages/Atlas";
 import { About } from "./pages/About";
 import { Learn } from "./pages/Learn";
@@ -35,13 +56,25 @@ function useTheme() {
     const root = document.documentElement;
     if (theme === "system") root.removeAttribute("data-theme");
     else root.setAttribute("data-theme", theme);
-    const dark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#0D1120" : "#F6F1E7");
+    const dark =
+      theme === "dark" ||
+      (theme === "system" &&
+        matchMedia("(prefers-color-scheme: dark)").matches);
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", dark ? "#0D1120" : "#F6F1E7");
   }, [theme]);
   return theme;
 }
 
 export default function App() {
+  const { language, t } = useI18n();
+  const [localized, setLocalized] = useState<{
+    source: Atlas;
+    atlas: Atlas;
+  } | null>(null);
+  const [localeError, setLocaleError] = useState<string | null>(null);
+  const [localeAttempt, setLocaleAttempt] = useState(0);
   const [atlas, setAtlas] = useState<Atlas | null>(null);
   const [open, setOpen] = useState<Atlas | null>(null);
   const [priv, setPriv] = useState<Atlas | null>(null);
@@ -62,18 +95,82 @@ export default function App() {
   useEffect(() => {
     const next = dataset === "private" && priv ? priv : open;
     if (next && next !== atlas) {
-      store.useDataset(next.id);
+      if (store.get().progress.datasetId !== next.id || !atlas)
+        store.useDataset(next.id);
       setAtlas(next);
     }
   }, [dataset, open, priv, atlas]);
 
+  useEffect(() => {
+    document.documentElement.lang = language === "ja" ? "ja" : "zh-CN";
+    const title = t(
+      "词光 Word Atlas · 一词一画，点亮雅思",
+      "詞光 Word Atlas · 一語に一枚の絵、IELTSを照らす",
+    );
+    const description = t(
+      "7,298 个雅思核心词，每个词一幅原创插画、两句原创例句和英美发音。学会一个，就点亮一颗星。免费、开源、无需注册。",
+      "IELTSの重要単語7,298語を、オリジナルのイラスト・例文2つ・英米の発音で学習。一語覚えるたびに、星が一つ輝きます。無料・オープンソース・登録不要。",
+    );
+    document.title = title;
+    document
+      .querySelector('link[rel="manifest"]')
+      ?.setAttribute(
+        "href",
+        `${import.meta.env.BASE_URL}${language === "ja" ? "manifest.ja.webmanifest" : "manifest.webmanifest"}`,
+      );
+    for (const selector of [
+      'meta[name="description"]',
+      'meta[property="og:description"]',
+    ])
+      document.querySelector(selector)?.setAttribute("content", description);
+    for (const selector of [
+      'meta[name="twitter:title"]',
+      'meta[property="og:title"]',
+    ])
+      document.querySelector(selector)?.setAttribute("content", title);
+  }, [language, t]);
+
+  useEffect(() => {
+    setLocaleError(null);
+    if (!atlas || language !== "ja") return;
+    let live = true;
+    loadJapaneseAtlas(atlas).then(
+      (translated) => {
+        if (live) setLocalized({ source: atlas, atlas: translated });
+      },
+      (error: Error) => {
+        if (live) setLocaleError(error.message);
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [atlas, language, localeAttempt]);
+
+  const displayed =
+    language === "ja"
+      ? localized?.source === atlas
+        ? localized.atlas
+        : null
+      : atlas;
+  useEffect(() => {
+    if (!atlas || (displayed && !localeError)) return;
+    const blockHiddenShortcuts = (event: KeyboardEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest(".boot"))
+        event.stopImmediatePropagation();
+    };
+    window.addEventListener("keydown", blockHiddenShortcuts, true);
+    return () =>
+      window.removeEventListener("keydown", blockHiddenShortcuts, true);
+  }, [atlas, displayed, localeError]);
   if (error)
     return (
       <div className="boot">
         <Logo />
         <p>{error}</p>
+        <LanguagePicker />
         <button className="btn btn-primary" onClick={() => location.reload()}>
-          重新加载
+          {t("重新加载", "再読み込み")}
         </button>
       </div>
     );
@@ -82,16 +179,48 @@ export default function App() {
       <div className="boot" aria-busy="true">
         <Logo />
         <span className="spinner" />
+        <p>{t("正在加载词库…", "単語データを読み込み中…")}</p>
       </div>
     );
   return (
-    <AtlasContext.Provider value={atlas}>
-      <Shell privateAvailable={!!priv} />
+    <AtlasContext.Provider value={displayed ?? atlas}>
+      <div hidden={!displayed || !!localeError}>
+        <Shell privateAvailable={!!priv} />
+      </div>
+      {(!displayed || localeError) && (
+        <div
+          className="boot"
+          aria-busy={!localeError}
+          onKeyDown={(event) => event.stopPropagation()}
+        >
+          <Logo />
+          {localeError ? (
+            <>
+              <p role="alert">{localeError}</p>
+              <button
+                className="btn btn-primary"
+                onClick={() => setLocaleAttempt((value) => value + 1)}
+              >
+                {t("重新加载", "再読み込み")}
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="spinner" />
+              <p role="status">
+                {t("正在加载词库…", "単語データを読み込み中…")}
+              </p>
+            </>
+          )}
+          <LanguagePicker />
+        </div>
+      )}
     </AtlasContext.Provider>
   );
 }
 
 function Shell({ privateAvailable }: { privateAvailable: boolean }) {
+  const { t } = useI18n();
   const { route, word } = useLocation();
   const onboarded = useStore((s) => s.settings.onboarded);
   const theme = useStore((s) => s.settings.theme);
@@ -119,33 +248,78 @@ function Shell({ privateAvailable }: { privateAvailable: boolean }) {
     if (!word) window.scrollTo({ top: 0 });
   }, [route.page]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const dark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+  const dark =
+    theme === "dark" ||
+    (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+
+  const navLabel = (page: Route["page"], label: string) =>
+    t(
+      label,
+      (
+        {
+          today: "今日",
+          atlas: "図鑑",
+          practice: "練習",
+          me: "マイページ",
+        } as Record<string, string>
+      )[page] ?? label,
+    );
 
   return (
     <div className={`app ${focus ? "is-focus" : ""}`}>
       {!focus && (
         <header className="topbar">
-          <a className="topbar-logo" href="#/" aria-label="词光 Word Atlas 首页">
+          <a
+            className="topbar-logo"
+            href="#/"
+            aria-label={t("词光 Word Atlas 首页", "詞光 Word Atlas ホーム")}
+          >
             <Logo />
           </a>
-          <nav className="topnav" aria-label="主导航">
+          <nav
+            className="topnav"
+            aria-label={t("主导航", "メインナビゲーション")}
+          >
             {NAV.map(({ page, label }) => (
-              <a key={page} href={page === "today" ? "#/" : `#/${page}`} className={route.page === page ? "is-on" : ""} aria-current={route.page === page ? "page" : undefined}>
-                {label}
+              <a
+                key={page}
+                href={page === "today" ? "#/" : `#/${page}`}
+                className={route.page === page ? "is-on" : ""}
+                aria-current={route.page === page ? "page" : undefined}
+              >
+                {navLabel(page, label)}
               </a>
             ))}
           </nav>
           <div className="topbar-tools">
-            <button className="search-pill" onClick={() => setPalette(true)} aria-label="搜索单词">
+            <button
+              className="search-pill"
+              onClick={() => setPalette(true)}
+              aria-label={t("搜索单词", "単語を検索")}
+            >
               <Search size={17} />
-              <span>搜索单词</span>
+              <span>{t("搜索单词", "単語を検索")}</span>
               <kbd>⌘K</kbd>
             </button>
             <AmbiencePicker />
-            <button className="icon-btn" onClick={() => store.settings({ theme: dark ? "light" : "dark" })} aria-label={dark ? "切换到浅色" : "切换到深色"}>
+            <LanguagePicker />
+            <button
+              className="icon-btn"
+              onClick={() => store.settings({ theme: dark ? "light" : "dark" })}
+              aria-label={
+                dark
+                  ? t("切换到浅色", "ライトモードに切り替え")
+                  : t("切换到深色", "ダークモードに切り替え")
+              }
+            >
               {dark ? <Sun size={19} /> : <Moon size={19} />}
             </button>
-            <a className="icon-btn hide-sm" href="#/about" aria-label="关于与开源" title="关于与开源">
+            <a
+              className="icon-btn hide-sm"
+              href="#/about"
+              aria-label={t("关于与开源", "このアプリ・ソースコード")}
+              title={t("关于与开源", "このアプリ・ソースコード")}
+            >
               <Github size={19} />
             </a>
           </div>
@@ -165,21 +339,32 @@ function Shell({ privateAvailable }: { privateAvailable: boolean }) {
         <footer className="footer">
           <Logo compact />
           <p>
-            一词一画，点亮雅思 · 免费开源 ·{" "}
+            {t(
+              "一词一画，点亮雅思 · 免费开源 ·",
+              "一語に一枚の絵、IELTSを照らす · 無料・オープンソース ·",
+            )}{" "}
             <a href={REPO_URL} target="_blank" rel="noreferrer">
               GitHub
             </a>{" "}
-            · <a href="#/about">关于</a>
+            · <a href="#/about">{t("关于", "このアプリについて")}</a>
           </p>
         </footer>
       )}
 
       {!focus && (
-        <nav className="tabbar" aria-label="主导航">
+        <nav
+          className="tabbar"
+          aria-label={t("主导航", "メインナビゲーション")}
+        >
           {NAV.map(({ page, label, icon: Icon }) => (
-            <a key={page} href={page === "today" ? "#/" : `#/${page}`} className={route.page === page ? "is-on" : ""} aria-current={route.page === page ? "page" : undefined}>
+            <a
+              key={page}
+              href={page === "today" ? "#/" : `#/${page}`}
+              className={route.page === page ? "is-on" : ""}
+              aria-current={route.page === page ? "page" : undefined}
+            >
               <Icon size={22} strokeWidth={route.page === page ? 2.1 : 1.7} />
-              <span>{label}</span>
+              <span>{navLabel(page, label)}</span>
             </a>
           ))}
         </nav>
@@ -196,6 +381,7 @@ function Shell({ privateAvailable }: { privateAvailable: boolean }) {
 }
 
 function WordSheet({ id }: { id: string | null }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const opened = id !== null;
   useEffect(() => {
@@ -222,7 +408,16 @@ function WordSheet({ id }: { id: string | null }) {
     return () => window.removeEventListener("keydown", on);
   }, [id, neighbor]);
   return (
-    <Sheet open={!!id} onClose={closeWord} label={ref ? `${ref.word} 词条` : "词条"} wide>
+    <Sheet
+      open={!!id}
+      onClose={closeWord}
+      label={
+        ref
+          ? t(`${ref.word} 词条`, `${ref.word} の詳細`)
+          : t("词条", "単語の詳細")
+      }
+      wide
+    >
       {entry ? (
         <EntryView key={entry.id} entry={entry} />
       ) : error ? (
@@ -231,14 +426,24 @@ function WordSheet({ id }: { id: string | null }) {
         <span className="spinner" />
       )}
       {ref && (
-        <nav className="sheet-nav" aria-label="切换词条">
-          <button className="icon-btn" onClick={() => neighbor(-1)} disabled={ref.order === 0} aria-label="上一个">
+        <nav className="sheet-nav" aria-label={t("切换词条", "単語を切り替え")}>
+          <button
+            className="icon-btn"
+            onClick={() => neighbor(-1)}
+            disabled={ref.order === 0}
+            aria-label={t("上一个", "前の単語")}
+          >
             <ChevronLeft size={20} />
           </button>
           <span>
             {(ref.order + 1).toLocaleString()} / {atlas.count.toLocaleString()}
           </span>
-          <button className="icon-btn" onClick={() => neighbor(1)} disabled={ref.order >= atlas.count - 1} aria-label="下一个">
+          <button
+            className="icon-btn"
+            onClick={() => neighbor(1)}
+            disabled={ref.order >= atlas.count - 1}
+            aria-label={t("下一个", "次の単語")}
+          >
             <ChevronRight size={20} />
           </button>
         </nav>

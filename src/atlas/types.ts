@@ -5,12 +5,14 @@ export type IndexRow = [string, string, string, string, number, number, number];
 
 export interface Sense {
   pos: string;
+  /** Display-language text; the source corpus is Chinese, locale overlays replace it. */
   zh: string;
   en: string;
 }
 
 export interface Example {
   en: string;
+  /** Display-language text; the source corpus is Chinese, locale overlays replace it. */
   zh: string;
 }
 
@@ -41,6 +43,7 @@ export const MEDIA = { img: 1, uk: 2, us: 4, ex: 8, ex2: 16 } as const;
 export interface WordRef {
   id: string;
   word: string;
+  /** Display-language text; the source corpus is Chinese, locale overlays replace it. */
   zh: string;
   ipa: string;
   cefr: number;

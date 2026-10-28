@@ -8,11 +8,14 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --import tsx --test src/**/*.test.ts",
+    "test:ja-review": "python3 -m unittest discover -s scripts/atlas -p 'test_ja*.py'",
+    "test:ja-semantic": "python3 scripts/atlas/test_ja_semantic_review.py",
     "check:atlas": "node scripts/check-atlas.mjs",
     "build:atlas": "python3 scripts/atlas/build_atlas.py",
     "render:cards": "node scripts/render-cards.mjs",
     "pack:public": "python3 scripts/package_public.py --out ../开源发布/word-atlas",
-    "format": "prettier --write src vite.config.ts scripts/*.mjs package.json tsconfig.json"
+    "format": "prettier --write src vite.config.ts scripts/*.mjs package.json tsconfig.json",
+    "check:japanese": "node scripts/check-japanese.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

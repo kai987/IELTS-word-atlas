@@ -8,6 +8,7 @@ import { Illustration } from "./Illustration";
 import { Speak } from "./Speak";
 import { shareWord } from "./share";
 import { openWord } from "../lib/router";
+import { useI18n } from "../i18n";
 
 export function Highlight({ text, word }: { text: string; word: string }) {
   const parts = splitHighlight(text, word);
@@ -22,12 +23,13 @@ export function Highlight({ text, word }: { text: string; word: string }) {
 }
 
 export function Pronounce({ entry, refw }: { entry: Entry; refw: WordRef | Entry }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const accent = useStore((s) => s.settings.accent);
   const both = entry.uk && entry.us && entry.uk !== entry.us;
   const items: ["uk" | "us", string, string][] = both
-    ? [["uk", "英", entry.uk], ["us", "美", entry.us]]
-    : [[accent, accent === "uk" ? "英" : "美", entry.uk || entry.us]];
+    ? [["uk", t("英", "英"), entry.uk], ["us", t("美", "米"), entry.us]]
+    : [[accent, accent === "uk" ? t("英", "英") : t("美", "米"), entry.uk || entry.us]];
   if (!both && items[0][2] === "") return null;
   return (
     <div className="pron">
@@ -51,6 +53,7 @@ export function Pronounce({ entry, refw }: { entry: Entry; refw: WordRef | Entry
 }
 
 export function EntryView({ entry, mode = "detail", eager = true }: { entry: Entry; mode?: "detail" | "intro" | "reveal"; eager?: boolean }) {
+  const { t } = useI18n();
   const atlas = useAtlas();
   const ref = atlas.byId.get(entry.id);
   const card = useStore((s) => s.progress.cards[entry.id]);
@@ -64,26 +67,27 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
     const hit = atlas.words.find((x) => x.word.toLowerCase() === w);
     return { label: f, id: hit?.id };
   });
-  const status = card ? (isMastered(card) ? "已掌握" : "学习中") : null;
+  const mastered = card ? isMastered(card) : false;
+  const status = card ? (mastered ? t("已掌握", "習得済み") : t("学习中", "学習中")) : null;
 
   return (
     <article className={`entry entry-${mode}`}>
       <div className="entry-art">
-        <Illustration src={atlas.img(entry)} word={entry.w} topic={topicIdx} eager={eager} alt={`${entry.w} 插画`} />
+        <Illustration src={atlas.img(entry)} word={entry.w} topic={topicIdx} eager={eager} alt={t(`${entry.w} 插画`, `${entry.w} のイラスト`)} />
       </div>
       <div className="entry-body">
         <header className="entry-head">
           <div className="entry-tags">
             <span className={`chip chip-level lv-${entry.cefr}`}>{entry.cefr}</span>
             {topic && <span className="chip">{topic[1]}</span>}
-            {status && <span className={`chip chip-status ${status === "已掌握" ? "is-done" : ""}`}>{status}</span>}
+            {status && <span className={`chip chip-status ${mastered ? "is-done" : ""}`}>{status}</span>}
           </div>
           {mode === "detail" && (
             <div className="entry-actions">
-              <button className={`icon-btn ${saved ? "is-on" : ""}`} onClick={() => toggleBookmark(entry.id)} aria-pressed={saved} aria-label={saved ? "取消收藏" : "收藏"} title={saved ? "取消收藏" : "收藏"}>
+              <button className={`icon-btn ${saved ? "is-on" : ""}`} onClick={() => toggleBookmark(entry.id)} aria-pressed={saved} aria-label={saved ? t("取消收藏", "お気に入りから削除") : t("收藏", "お気に入りに追加")} title={saved ? t("取消收藏", "お気に入りから削除") : t("收藏", "お気に入りに追加")}>
                 {saved ? <BookmarkCheck size={19} /> : <Bookmark size={19} />}
               </button>
-              <button className="icon-btn" onClick={() => shareWord(atlas, entry)} aria-label="生成分享卡片" title="生成分享卡片">
+              <button className="icon-btn" onClick={() => shareWord(atlas, entry)} aria-label={t("生成分享卡片", "共有カードを作成")} title={t("生成分享卡片", "共有カードを作成")}>
                 <Share2 size={19} />
               </button>
             </div>
@@ -117,11 +121,11 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
 
         {entry.ex.length > 0 && (
           <section className="block">
-            <h3 className="eyebrow">例句</h3>
+            <h3 className="eyebrow">{t("例句", "例文")}</h3>
             <ul className="examples">
               {entry.ex.map((x, i) => (
                 <li key={i}>
-                  {entry.ex.length > 1 && <span className={`ex-tag ${i ? "is-ielts" : ""}`}>{i ? "雅思语境" : "日常"}</span>}
+                  {entry.ex.length > 1 && <span className={`ex-tag ${i ? "is-ielts" : ""}`}>{i ? t("雅思语境", "IELTSの文脈") : t("日常", "日常")}</span>}
                   <p className="ex-en" lang="en">
                     <Highlight text={x.en} word={entry.w} />
                     <Speak url={exUrls[i] ?? null} text={x.en} accent={i === 1 && exUrls[1] ? "us" : accent} size="sm" className="ex-speak" />
@@ -135,7 +139,7 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
 
         {entry.col.length > 0 && (
           <section className="block">
-            <h3 className="eyebrow">常用搭配</h3>
+            <h3 className="eyebrow">{t("常用搭配", "よく使う組み合わせ")}</h3>
             <ul className="collocations">
               {entry.col.map((c) => {
                 const { en, zh } = splitPair(c);
@@ -154,7 +158,7 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
           <section className="block relations">
             {famLinks.length > 0 && (
               <div>
-                <h3 className="eyebrow">词族</h3>
+                <h3 className="eyebrow">{t("词族", "派生語・関連語")}</h3>
                 <p>
                   {famLinks.map((f) =>
                     f.id && mode === "detail" ? (
@@ -170,13 +174,13 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
             )}
             {entry.syn.length > 0 && (
               <div>
-                <h3 className="eyebrow">近义</h3>
+                <h3 className="eyebrow">{t("近义", "類義語")}</h3>
                 <p>{entry.syn.map((s) => <span key={s}>{s}</span>)}</p>
               </div>
             )}
             {entry.ant.length > 0 && (
               <div>
-                <h3 className="eyebrow">反义</h3>
+                <h3 className="eyebrow">{t("反义", "対義語")}</h3>
                 <p>{entry.ant.map((s) => <span key={s}>{s}</span>)}</p>
               </div>
             )}
@@ -190,11 +194,11 @@ export function EntryView({ entry, mode = "detail", eager = true }: { entry: Ent
           </aside>
         )}
 
-        {entry.note && <p className="usage-note">用法提醒：{entry.note}</p>}
+        {entry.note && <p className="usage-note">{t("用法提醒：", "用法の注意：")}{entry.note}</p>}
 
         {mode === "detail" && card && (
           <p className="memory-note">
-            {card.due <= Date.now() ? "现在可以复习" : `下次复习 ${formatInterval(card.due - Date.now())}后`} · 记忆稳定度 {card.s < 1 ? "<1" : Math.round(card.s)} 天 · 已复习 {card.reps} 次
+            {card.due <= Date.now() ? t("现在可以复习", "今すぐ復習できます") : t(`下次复习 ${formatInterval(card.due - Date.now())}后`, `次の復習まで ${formatInterval(card.due - Date.now())}`)} · {t("记忆稳定度", "記憶の安定度")} {card.s < 1 ? "<1" : Math.round(card.s)} {t("天", "日")} · {t(`已复习 ${card.reps} 次`, `復習 ${card.reps} 回`)}
           </p>
         )}
       </div>

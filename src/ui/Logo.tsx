@@ -1,3 +1,5 @@
+import { useI18n } from "../i18n";
+
 export function Mark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" className="mark">
@@ -14,11 +16,12 @@ export function Mark({ size = 28 }: { size?: number }) {
 }
 
 export function Logo({ compact = false }: { compact?: boolean }) {
+  const { t } = useI18n();
   return (
     <span className="logo">
       <Mark />
       <span className="logo-text">
-        <b>词光</b>
+        <b>{t("词光", "詞光")}</b>
         {!compact && <small>Word Atlas</small>}
       </span>
     </span>

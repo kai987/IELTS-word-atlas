@@ -52,14 +52,14 @@ function quizKind(ref: WordRef, p: Progress, s: Settings, salt: number): QuizKin
 /** Distractors that look plausible: same level, similar spelling or length, different meaning. */
 export function distractors(atlas: Atlas, ref: WordRef, kind: QuizKind, seed: number) {
   const target = normalize(ref.word);
-  const zhCore = ref.zh.replace(/^[a-z.]+\s*/, "").split(/[；;，,]/)[0];
+  const meaningCore = ref.zh.replace(/^[a-z.]+\s*/, "").split(/[；;，,、]/)[0];
   const scored: [number, WordRef][] = [];
   const pool = atlas.words;
   const start = Math.max(0, ref.order - 400);
   for (let i = start; i < Math.min(pool.length, ref.order + 400); i++) {
     const w = pool[i];
     if (w.id === ref.id || normalize(w.word) === target) continue;
-    if (zhCore && w.zh.includes(zhCore)) continue;
+    if (meaningCore && w.zh.includes(meaningCore)) continue;
     let score = hashSeed(w.id + seed) % 100;
     if (kind === "listen" || kind === "picture") {
       if (w.word[0]?.toLowerCase() === target[0]) score += 120;

@@ -12,24 +12,41 @@ export function useAtlas() {
 /** Full entry for an id; returns the cached copy synchronously when available. */
 export function useEntry(id: string | null | undefined) {
   const atlas = useAtlas();
-  const [entry, setEntry] = useState<Entry | undefined>(() => (id ? atlas.peek(id) : undefined));
-  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<{
+    atlas: Atlas;
+    id: typeof id;
+    entry?: Entry;
+    error: string | null;
+  }>(() => ({
+    atlas,
+    id,
+    entry: id ? atlas.peek(id) : undefined,
+    error: null,
+  }));
   useEffect(() => {
     if (!id) return;
     const hit = atlas.peek(id);
-    setEntry(hit);
-    setError(null);
+    setResult({ atlas, id, entry: hit, error: null });
     if (hit) return;
     let live = true;
     atlas.entry(id).then(
-      (e) => live && setEntry(e),
-      (e: Error) => live && setError(e.message),
+      (entry) => {
+        if (live) setResult({ atlas, id, entry, error: null });
+      },
+      (error: Error) => {
+        if (live) setResult({ atlas, id, error: error.message });
+      },
     );
     return () => {
       live = false;
     };
   }, [atlas, id]);
-  return { entry: entry?.id === id ? entry : undefined, error };
+  const current = result.atlas === atlas && result.id === id;
+  return {
+    entry:
+      (id ? atlas.peek(id) : undefined) ?? (current ? result.entry : undefined),
+    error: current ? result.error : null,
+  };
 }
 
 /** Warm the chunks for a list of ids (e.g. a learning session). */

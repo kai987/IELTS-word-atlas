@@ -1,3 +1,4 @@
+import { useI18n } from "../i18n";
 import { Grid3x3, List, Search, Sparkles, X } from "lucide-react";
 import { Galaxy } from "../galaxy/Galaxy";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -12,13 +13,6 @@ import { searchAtlas } from "../ui/Palette";
 import { Speak } from "../ui/Speak";
 
 type Status = "all" | "new" | "learning" | "mastered" | "saved";
-const STATUS: [Status, string][] = [
-  ["all", "全部"],
-  ["new", "未学"],
-  ["learning", "学习中"],
-  ["mastered", "已掌握"],
-  ["saved", "收藏"],
-];
 
 type View = "grid" | "list" | "galaxy";
 function readView(): View {
@@ -35,6 +29,14 @@ export function AtlasPage({
 }: {
   route: Extract<Route, { page: "atlas" }>;
 }) {
+  const { t } = useI18n();
+  const STATUS: [Status, string][] = [
+    ["all", t("全部", "すべて")],
+    ["new", t("未学", "未学習")],
+    ["learning", t("学习中", "学習中")],
+    ["mastered", t("已掌握", "習得済み")],
+    ["saved", t("收藏", "お気に入り")],
+  ];
   const atlas = useAtlas();
   const cards = useStore((s) => s.progress.cards);
   const bookmarks = useStore((s) => s.progress.bookmarks);
@@ -97,14 +99,14 @@ export function AtlasPage({
     <div className={`page atlas ${view === "galaxy" ? "is-galaxy" : ""}`}>
       <header className="atlas-head">
         <div>
-          <p className="eyebrow">图鉴 · {atlas.count.toLocaleString()} 词</p>
+          <p className="eyebrow">{t(`图鉴 · ${atlas.count.toLocaleString()} 词`, `単語図鑑 · ${atlas.count.toLocaleString()}語`)}</p>
           <h1 className="display">
-            每个词，
+            {t("每个词，", "どの単語にも、")}
             <br className="br-sm" />
-            都有一幅画。
+            {t("都有一幅画。", "一枚の絵がある。")}
           </h1>
           <p className="lede">
-            {atlas.examples.toLocaleString()} 条原创例句 · 英美发音 · 按难度和 {atlas.topics.length} 个雅思话题整理
+            {t(`${atlas.examples.toLocaleString()} 条原创例句 · 英美发音 · 按难度和 ${atlas.topics.length} 个雅思话题整理`, `${atlas.examples.toLocaleString()}のオリジナル例文 · 英米の発音 · レベル別・IELTSの${atlas.topics.length}トピック別に収録`)}
           </p>
         </div>
         <label className="search">
@@ -112,7 +114,7 @@ export function AtlasPage({
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="搜索单词或中文释义"
+            placeholder={t("搜索单词或中文释义", "単語・日本語の意味で検索")}
             spellCheck={false}
             autoComplete="off"
           />
@@ -120,7 +122,7 @@ export function AtlasPage({
             <button
               className="icon-btn"
               onClick={() => setQ("")}
-              aria-label="清空搜索"
+              aria-label={t("清空搜索", "検索をクリア")}
             >
               <X size={16} />
             </button>
@@ -131,12 +133,12 @@ export function AtlasPage({
       <div className="filters">
         {view !== "galaxy" && (
           <>
-            <div className="chips chips-scroll" role="group" aria-label="难度">
+            <div className="chips chips-scroll" role="group" aria-label={t("难度", "レベル")}>
               <button
                 className={`chip-btn ${!level ? "is-on" : ""}`}
                 onClick={() => setFilter({ level: undefined })}
               >
-                所有难度
+                {t("所有难度", "すべてのレベル")}
               </button>
               {atlas.cefr.map((l) => (
                 <button
@@ -150,12 +152,12 @@ export function AtlasPage({
                 </button>
               ))}
             </div>
-            <div className="chips chips-scroll" role="group" aria-label="主题">
+            <div className="chips chips-scroll" role="group" aria-label={t("主题", "テーマ")}>
               <button
                 className={`chip-btn ${!topic ? "is-on" : ""}`}
                 onClick={() => setFilter({ topic: undefined })}
               >
-                所有主题
+                {t("所有主题", "すべてのテーマ")}
               </button>
               {atlas.topics.map(([k, name]) => (
                 <button
@@ -173,7 +175,7 @@ export function AtlasPage({
         )}
         <div className="filters-row">
           {view !== "galaxy" && (
-            <div className="segmented" role="group" aria-label="学习状态">
+            <div className="segmented" role="group" aria-label={t("学习状态", "学習状況")}>
               {STATUS.map(([k, label]) => (
                 <button
                   key={k}
@@ -188,18 +190,18 @@ export function AtlasPage({
           )}
           <span className="result-count">
             {view === "galaxy"
-              ? "搜索一个词，星图会带你飞过去"
-              : `${list.length.toLocaleString()} 个结果`}
+              ? t("搜索一个词，星图会带你飞过去", "単語を検索すると、星図がその場所へ案内します")
+              : t(`${list.length.toLocaleString()} 个结果`, `${list.length.toLocaleString()}件の検索結果`)}
           </span>
           <div
             className="segmented segmented-icons"
             role="group"
-            aria-label="视图"
+            aria-label={t("视图", "表示形式")}
           >
             <button
               className={view === "grid" ? "is-on" : ""}
               onClick={() => setView("grid")}
-              aria-label="图片视图"
+              aria-label={t("图片视图", "画像表示")}
               aria-pressed={view === "grid"}
             >
               <Grid3x3 size={17} />
@@ -207,7 +209,7 @@ export function AtlasPage({
             <button
               className={view === "list" ? "is-on" : ""}
               onClick={() => setView("list")}
-              aria-label="列表视图"
+              aria-label={t("列表视图", "リスト表示")}
               aria-pressed={view === "list"}
             >
               <List size={17} />
@@ -215,7 +217,7 @@ export function AtlasPage({
             <button
               className={view === "galaxy" ? "is-on" : ""}
               onClick={() => setView("galaxy")}
-              aria-label="星图视图"
+              aria-label={t("星图视图", "星図表示")}
               aria-pressed={view === "galaxy"}
             >
               <Sparkles size={17} />
@@ -229,7 +231,7 @@ export function AtlasPage({
       ) : list.length === 0 ? (
         <div className="empty">
           <img src={`${import.meta.env.BASE_URL}brand/empty.webp`} alt="" />
-          <p>这片星域还没有词。换个筛选条件试试。</p>
+          <p>{t("这片星域还没有词。换个筛选条件试试。", "この星域にはまだ単語がありません。絞り込み条件を変えてみましょう。")}</p>
         </div>
       ) : view === "grid" ? (
         <VirtualGrid items={list} cards={cards} />
