@@ -28,9 +28,15 @@ startup script and the application resolve the language consistently, including
 when browser storage is blocked. Latin text and digits follow the hosted Word
 Atlas font scheme: Atkinson Hyperlegible Next for Latin text and the Noto Sans
 SC Latin subset as the digits-only `WA Digits` face (`U+0030-0039`). Chinese text
-uses Noto Sans SC. Japanese glyphs retain the existing
+uses Noto Sans SC. Larger Japanese headings and reading text retain the existing
 `"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif` stack, including
-the Japanese logo and splash. The variable fonts are bundled through Fontsource
+the Japanese logo and splash. Navigation, filters, settings controls and action
+buttons use Noto Sans JP at weight 500, with primary actions at 600. Japanese
+text at 15px or below uses `--ja-ui`, including the base body text, captions,
+small meanings, example translations and notes. Text sizes and weights are
+preserved. Larger reading text and related-word links retain their reading fonts.
+The interface font is scoped to Japanese and keeps WA Digits and Atkinson for
+digits and Latin text. The variable fonts are bundled through Fontsource
 and served locally with the application. Canvas share cards read the same CSS
 font variables; particle targets are sampled after their fonts have loaded.
 Font licenses are included in `public/fonts/`.

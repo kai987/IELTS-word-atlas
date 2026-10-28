@@ -1,0 +1,75 @@
+/* Japanese controls and text up to 15px use the UI face. */
+:root:lang(ja) {
+  --ja-ui: "WA Digits", "Atkinson Hyperlegible Next Variable", "Noto Sans JP Variable", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+}
+
+/* The base text size is 15px; smaller descendants inherit this face. */
+:root:lang(ja) body {
+  font-family: var(--ja-ui);
+}
+
+/* Preserve the reading face where larger text previously inherited it. */
+:root:lang(ja) :where(
+  h1,
+  h2,
+  h3,
+  .lede,
+  .journey-lede,
+  .senses .zh,
+  .spell-zh,
+  .option,
+  .typing-cue p,
+  .typing-zh
+) {
+  font-family: var(--sans);
+}
+
+:root:lang(ja) :is(
+  .topnav a,
+  .tabbar a,
+  .btn,
+  .icon-btn,
+  .link,
+  .chip-btn,
+  .segmented button,
+  .language-menu button,
+  .language-initial,
+  .search-pill,
+  .search input,
+  .palette-input input,
+  .atlas-view-guide-dismiss,
+  .splash-skip,
+  .amb-pop button,
+  .speak,
+  .choice,
+  .choice b,
+  .mode-card,
+  .mode-card b,
+  .galaxy-tip,
+  .galaxy-tip b
+) {
+  font-family: var(--ja-ui);
+  font-weight: 500;
+}
+
+:root:lang(ja) .btn:is(.btn-primary, .btn-terra, .btn-sage) {
+  font-weight: 600;
+}
+
+/* Related words are reading content even when they link to another entry. */
+:root:lang(ja) .relations .link {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+/* These small styles declare their own reading face instead of inheriting it. */
+:root:lang(ja) :is(
+  .eyebrow,
+  .mini-stats dd small,
+  .station-count,
+  .summary-stats dd small,
+  .stat-strip dd small,
+  .galaxy-labels span
+) {
+  font-family: var(--ja-ui);
+}
