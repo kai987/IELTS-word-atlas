@@ -1,7 +1,7 @@
 import { useI18n } from "../i18n";
 import { ArrowUpRight, Database, Github, Heart } from "lucide-react";
 import { useAtlas } from "../atlas/context";
-import { REPO_URL } from "../config";
+import { REPO_URL, UPSTREAM_REPO_URL } from "../config";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -16,7 +16,7 @@ export function About() {
           <p className="eyebrow">{t("关于词光", "詞光について")}</p>
           <h1 className="display">{t("一词一画，点亮雅思。", "単語と絵で、IELTSに光を。")}</h1>
           <p className="lede">
-            {t(`词光把雅思阅读 8000 词整理成 ${atlas.count.toLocaleString()} 个词条。每个词一幅原创插画，一句日常例句，一句雅思例句，配英美发音、常用搭配和易混提示。学会一个，就在你的星图上点亮一颗星。`, `詞光はIELTSリーディング向けの8000語を、${atlas.count.toLocaleString()}件の見出し語にまとめました。各単語にオリジナルのイラスト、日常の例文とIELTSの例文を一つずつ収録し、イギリス・アメリカ英語の発音、コロケーション、混同しやすい語のヒントを添えています。一語覚えるたびに、あなたの星図に星が一つ灯ります。`)}
+            {t(`词光收录 ${atlas.count.toLocaleString()} 个雅思核心词条。每个词一幅原创插画，一句日常例句，一句雅思例句，配英美发音、常用搭配和易混提示。学会一个，就在你的星图上点亮一颗星。`, `詞光はIELTSの主要語彙を${atlas.count.toLocaleString()}語収録しています。各単語にオリジナルのイラスト、日常の例文とIELTSの例文を一つずつ収録し、イギリス・アメリカ英語の発音、コロケーション、混同しやすい語のヒントを添えています。一語覚えるたびに、あなたの星図に星が一つ灯ります。`)}
           </p>
           <p className="lede">{t("它免费、开源、无需注册。代码用 MIT，词库用 CC BY 4.0，谁都可以拿去用。", "無料・オープンソースで、登録も不要です。コードはMIT、単語データはCC BY 4.0ライセンスで、どなたでも利用できます。")}</p>
           <div className="about-actions">
@@ -92,7 +92,17 @@ export function About() {
         <section className="panel">
           <h3 className="eyebrow">{t("内容从哪里来", "コンテンツについて")}</h3>
           <p className="muted">
-            {t("释义、例句、搭配和提示由大语言模型按统一的词典规范重新撰写；插画由图像模型按统一画风逐词绘制；发音和朗读由 ElevenLabs 合成（英音 Alice，美音 Sarah）。所有内容都经过结构和一致性的自动校验，但没有逐条人工审校。看到错的地方，欢迎在 GitHub 提 Issue，或者直接改数据提 PR。", "意味・例文・コロケーション・ヒントは、統一した辞書基準に沿って大規模言語モデルが新たに作成しました。イラストは画像生成モデルで画風を統一して単語ごとに制作し、発音・読み上げはElevenLabsで合成しています（イギリス英語：Alice、アメリカ英語：Sarah）。すべての内容に構造と整合性の自動検証を行っていますが、一件ずつの人手による校閲は行っていません。誤りにお気づきの際は、GitHubのIssue、またはデータを修正したPRでお知らせください。")}
+            {t("原版词库、插画和英语音频来自上游 Word Atlas 项目。释义、例句、搭配和提示由大语言模型按统一规范撰写，插画由图像模型制作，英语发音和朗读由 ElevenLabs 合成（英音 Alice，美音 Sarah）。本分支增加了日语界面和全库日译，日语开屏配音由 AivisSpeech 的 morioki 合成。", "元の単語データ・イラスト・英語音声は、上流のWord Atlasプロジェクトで制作されました。意味・例文・コロケーション・ヒントは統一した基準に沿って大規模言語モデルが作成し、イラストは画像生成モデル、英語の発音・読み上げはElevenLabsで生成しています（イギリス英語：Alice、アメリカ英語：Sarah）。このフォークでは日本語の画面と全語彙の日本語訳を追加し、起動画面の日本語音声はAivisSpeechのmoriokiで合成しています。")}
+          </p>
+          <p className="muted">
+            {t("日译经过结构检查、独立语义复审和针对性修正，但并非专业人工认证，仍可能有不准确之处。发现问题，欢迎在本分支的 GitHub 提 Issue 或 PR。", "日本語訳は構造チェックに加え、翻訳工程とは別に原文と意味を照合し、必要な箇所を修正しています。ただし、専門家による全件校閲を保証するものではありません。誤りにお気づきの際は、このフォークのGitHubでIssueまたはPRをお寄せください。")}
+          </p>
+          <p className="muted">
+            {t("原项目与素材署名：", "元のプロジェクト・素材のクレジット：")}{" "}
+            <a className="link" href={UPSTREAM_REPO_URL} target="_blank" rel="noreferrer">
+              designfuchen/word-atlas
+            </a>{" "}
+            · Word Atlas contributors · CC BY 4.0
           </p>
           <p className="muted">{t("词光不是官方雅思词表，也不承诺提分。它只想把背单词这件事，做得好看一点、扎实一点。", "詞光はIELTS公式の単語リストではなく、スコア向上を保証するものでもありません。単語を覚える時間を、少し美しく、着実なものにするためのツールです。")}</p>
         </section>
@@ -100,7 +110,7 @@ export function About() {
         <section className="panel">
           <h3 className="eyebrow">{t("给开发者", "開発者の方へ")}</h3>
           <p className="muted">
-            <code>data/word-atlas.json</code> {t("和", "と")} <code>.csv</code> {t("是完整词库；", "は単語データの全件版です。")}<code>public/atlas</code> {t("里是网页用的分块数据、插画和音频。拿去做 Anki 牌组、背词小程序、浏览器插件，或者 AI 应用的评测集，署名即可。", "にはウェブ用に分割したデータ・イラスト・音声が入っています。クレジットを表示すれば、Ankiデッキ、単語学習アプリ、ブラウザー拡張、AIアプリの評価用データなどに利用できます。")}
+            <code>data/word-atlas.json</code> {t("和", "と")} <code>data/word-atlas.csv</code> {t("保留原版英中词库；日语译文源文件位于", "は元の英語・中国語データです。日本語訳のソースは")} <code>data/ja/entries/</code> {t("，网页使用的日语数据位于", "、ウェブアプリ用の日本語データは")} <code>public/atlas/ja/</code>{t("。插画和英语音频在", "にあります。イラストと英語音声は")} <code>public/atlas/</code>{t("。遵守 CC BY 4.0 的署名等要求，即可用于 Anki 牌组、背词应用、浏览器插件或研究。", "に含まれます。CC BY 4.0のクレジット表示などの条件に従って、Ankiデッキ、単語学習アプリ、ブラウザー拡張や研究に利用できます。")}
           </p>
           <a className="link" href={`${REPO_URL}#readme`} target="_blank" rel="noreferrer">
             {t("阅读文档", "ドキュメントを読む")} <ArrowUpRight size={14} />
