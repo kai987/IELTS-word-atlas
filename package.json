@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --import tsx --test src/**/*.test.ts",
+    "test:typography": "node --test tests/typography.spec.mjs",
     "test:ja-review": "python3 -m unittest discover -s scripts/atlas -p 'test_ja*.py'",
     "test:ja-semantic": "python3 scripts/atlas/test_ja_semantic_review.py",
     "check:atlas": "node scripts/check-atlas.mjs",

@@ -40,6 +40,17 @@ digits and Latin text. The variable fonts are bundled through Fontsource
 and served locally with the application. Canvas share cards read the same CSS
 font variables; particle targets are sampled after their fonts have loaded.
 Font licenses are included in `public/fonts/`.
+The Noto Sans JP and SC font declarations are separate language CSS chunks.
+Startup loads only the selected language; switching languages waits for its
+stylesheet before updating the interface and reuses successful loads. Failed
+requests keep the system fallback available and can be retried on a later
+selection. WA Digits and the Latin fonts remain available to both languages.
+Component headings retain their own display-font declarations instead of a
+global heading override. `npm run test:typography` checks computed fonts and
+weights in the production build at desktop and 390px widths, including language
+switches; the shared browser audit is `scripts/typography-audit.mjs`.
+Run `npm run build` and `npx playwright install chromium` before the standalone
+typography tests. The Pages workflow builds and runs this check automatically.
 The base `:root` and dark-theme variables match the original hosted stylesheet,
 including font, radius, motion and layout variables. The original
 `data-font="sans"` override keeps the active Latin typeface as Atkinson;

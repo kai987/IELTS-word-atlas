@@ -46,6 +46,10 @@ jobs:
         env:
           ATLAS_BASE: ${{ steps.pages.outputs.base_path }}/
         run: npm run build
+      - name: Install typography test browser
+        run: npx playwright install --with-deps chromium
+      - name: Check production typography
+        run: npm run test:typography
       - name: Record published revision
         run: |
           printf '%s\n' "$GITHUB_SHA" > dist/revision.txt

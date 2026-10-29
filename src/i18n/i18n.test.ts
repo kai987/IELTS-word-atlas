@@ -71,14 +71,14 @@ Object.defineProperty(globalThis, "localStorage", {
     setItem: (key: string, value: string) => storage.set(key, value),
   },
 });
-afterEach(() => {
-  setLanguage("zh");
+afterEach(async () => {
+  await setLanguage("zh");
   storage.clear();
 });
 
-test("language selection persists separately from learning progress", () => {
+test("language selection persists separately from learning progress", async () => {
   storage.set("word-atlas:v2:word-atlas-open", "existing-progress");
-  setLanguage("ja");
+  await setLanguage("ja");
   assert.equal(getLanguage(), "ja");
   assert.equal(translate("收藏", "お気に入り"), "お気に入り");
   assert.equal(storage.get(LANGUAGE_KEY), "ja");
@@ -86,17 +86,17 @@ test("language selection persists separately from learning progress", () => {
     storage.get("word-atlas:v2:word-atlas-open"),
     "existing-progress",
   );
-  setLanguage("zh");
+  await setLanguage("zh");
   assert.equal(translate("收藏", "お気に入り"), "收藏");
 });
 
-test("blocked storage does not prevent language changes", () => {
+test("blocked storage does not prevent language changes", async () => {
   const original = localStorage.setItem;
   localStorage.setItem = () => {
     throw new Error("storage blocked");
   };
   try {
-    setLanguage("ja");
+    await setLanguage("ja");
     assert.equal(getLanguage(), "ja");
     assert.equal(translate("练习", "練習"), "練習");
   } finally {
@@ -104,9 +104,18 @@ test("blocked storage does not prevent language changes", () => {
   }
 });
 
-test("explicitly selecting the current language saves the preference", () => {
+test("explicitly selecting the current language saves the preference", async () => {
   const current = getLanguage();
   storage.delete(LANGUAGE_KEY);
-  setLanguage(current);
+  await setLanguage(current);
   assert.equal(storage.get(LANGUAGE_KEY), current);
+});
+
+test("a later language selection wins while a previous selection is preparing", async () => {
+  await setLanguage("zh");
+  const previous = setLanguage("ja");
+  const latest = setLanguage("zh");
+  await Promise.all([previous, latest]);
+  assert.equal(getLanguage(), "zh");
+  assert.equal(storage.get(LANGUAGE_KEY), "zh");
 });

@@ -105,7 +105,7 @@ export function LanguagePicker() {
               className={language === item.id ? "is-selected" : ""}
               aria-checked={language === item.id}
               onClick={() => {
-                setLanguage(item.id);
+                void setLanguage(item.id);
                 setOpen(false);
                 trigger.current?.focus();
               }}

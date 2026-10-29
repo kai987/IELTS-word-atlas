@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import { loadLanguageFonts } from "./language-fonts";
 
 export type Language = "zh" | "ja";
 export const LANGUAGE_KEY = "word-atlas:language";
@@ -26,6 +27,7 @@ function readLanguage(): Language {
 }
 
 let language = readLanguage();
+let languageRequest = 0;
 const listeners = new Set<() => void>();
 const translators = {
   zh: (zh: string, _ja: string) => zh,
@@ -36,15 +38,22 @@ export const getLanguage = () => language;
 export const translate = (zh: string, ja: string) =>
   translators[language](zh, ja);
 
-export function setLanguage(next: Language) {
+async function applyLanguage(next: Language) {
+  const request = ++languageRequest;
+  await loadLanguageFonts(next);
+  // A later selection (or storage event) wins, even if its CSS loaded first.
+  if (request !== languageRequest || next === language) return;
+  language = next;
+  listeners.forEach((listener) => listener());
+}
+
+export function setLanguage(next: Language): Promise<void> {
   try {
     localStorage.setItem(LANGUAGE_KEY, next);
   } catch {
     // The selection still works for this visit when browser storage is unavailable.
   }
-  if (next === language) return;
-  language = next;
-  listeners.forEach((listener) => listener());
+  return applyLanguage(next);
 }
 
 function subscribe(listener: () => void) {
@@ -58,9 +67,7 @@ if (typeof window !== "undefined") {
   window.addEventListener("storage", (event) => {
     if (event.key !== LANGUAGE_KEY && event.key !== null) return;
     const next = readLanguage();
-    if (next === language) return;
-    language = next;
-    listeners.forEach((listener) => listener());
+    void applyLanguage(next);
   });
 }
 

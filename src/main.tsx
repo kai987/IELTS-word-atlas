@@ -2,20 +2,23 @@ import "@fontsource-variable/fraunces/opsz.css";
 import "@fontsource-variable/fraunces/opsz-italic.css";
 import "@fontsource-variable/source-serif-4/opsz.css";
 import "@fontsource-variable/atkinson-hyperlegible-next/wght.css";
-import "@fontsource-variable/noto-sans-sc/wght.css";
-import "@fontsource-variable/noto-sans-jp/wght.css";
 import "./styles/fonts.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { getLanguage } from "./i18n";
+import { loadLanguageFonts } from "./i18n/language-fonts";
 import "./styles/app.css";
 import "./styles/japanese-ui.css";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+// Keep the first rendered language paired with its font declarations.
+void loadLanguageFonts(getLanguage()).then(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+});
 
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {

@@ -8,11 +8,9 @@
   font-family: var(--ja-ui);
 }
 
-/* Preserve the reading face where larger text previously inherited it. */
+/* Restore the reading face only where larger text relies on inheritance.
+   Headings keep the font family declared by their own component styles. */
 :root:lang(ja) :where(
-  h1,
-  h2,
-  h3,
   .lede,
   .journey-lede,
   .senses .zh,
